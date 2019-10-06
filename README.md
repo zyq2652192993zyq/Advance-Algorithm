@@ -1,4 +1,4 @@
-> # ACM Algorithm
+> # Algorithm Summary
 
 [TOC]
 
