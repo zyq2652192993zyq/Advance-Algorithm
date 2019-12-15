@@ -15,7 +15,7 @@
 
 对于每一组数据，给出一行输出，输出摆放的方案数目C （数据保证C<2^31）。
 
-Sample Input
+# Sample Input
 
 ```
 2 1
@@ -29,7 +29,7 @@ Sample Input
 -1 -1
 ```
 
-Sample Output
+# Sample Output
 
 ```
 2
