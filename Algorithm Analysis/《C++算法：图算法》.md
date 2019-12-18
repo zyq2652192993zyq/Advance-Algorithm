@@ -1,4 +1,4 @@
-> # 《C++算法：图算法》
+# 《C++算法：图算法》
 
 [TOC]
 
@@ -421,10 +421,10 @@ POJ 1776 竞赛图转哈密顿路径
 典型题目：
 
 - [x] John's trip：POJ 1041
-
-The Necklace: UVa 10054
-
-Play on Words: Uva 10129
+- [ ] The Necklace: UVa 10054
+- [ ] Play on Words: Uva 10129
+- [ ] POJ 2513 Colored Sticks（欧拉回路 + 字典树 + 并查集）
+- [ ] POJ 1300 Door Man（有向图的欧拉回路）
 
 《算法竞赛入门经典》111页的6.4.4节。
 
@@ -434,7 +434,7 @@ Frogs: HDU 5514 （相当于青蛙跳环）
 
 <https://blog.csdn.net/HuangXinyue1017/article/details/80835350>
 
-Watchcow（双向欧拉回路）：POJ 2230
+- [ ] Watchcow（双向欧拉回路）：POJ 2230
 
 Door Man: POJ 1300
 
@@ -443,6 +443,7 @@ POJ 1386, 2337,
 HDU 6311（无向图+欧拉路径）, 5883, 1116, 5348(竞赛图+欧拉路径) 
 
 - [x] HDU-1878（最基本的欧拉回路判断）
+- [ ] HDU 3018 Ant Trip 欧拉回路一笔画问题
 
 
 
@@ -1403,7 +1404,21 @@ int main()
 
 **一般连通性问题**：一个给定图时k-连通的嘛？时k-边连通的嘛？点连通度和边连通度各是多少？
 
+典型题目：
 
+<https://blog.csdn.net/u013480600/article/details/44831553>
+
+<https://blog.csdn.net/u013480600/article/details/44835827>
+
+- [ ] POJ 1144 Network(简单求无向图割顶数)：直接求割顶数。
+- [ ] POJ 2117 Electricity(无向图割点)：问删除一点能增加几个连通分量
+- [ ] POJ 1523 SPF(割点所割连通分量数): 问删除一点能增加几个连通分量。
+- [ ] HDU 4587 TWO NODES(无向图割点)：还是关于删除一个点能剩余几个连通分量的问题。
+- [ ] HDU 3849 By Recognizing…(求无向图的桥数目):如何在dfs完之后判断一条边是否是桥？
+- [ ] HDU 4738 Caocao's Bridges(重边无向图求桥)：有重边的无向图如何求桥边.
+- [ ] POJ 3352Road Construction(边双连通分量)：求添加最少的边数，使得图变成边双连通。
+- [ ] POJ 3177Redundant Paths(边双连通分量+缩点)：求添加最少的边数，使得图变成边双连通。
+- [ ] HDU 3749Financial Crisis(点-双连通分量)：输出两点间路径条数
 
 ## 2.7 BFS算法
 
@@ -1858,13 +1873,289 @@ POJ 3660（Floyd求传递闭包）
 
 
 
-
-
-
-
-
-
 # 第四章 最小生成树
+
+最小生成树（Minimum spanning tree）可以参考《数据结构：思想与实现》，CP-Algorithm，OI WIKI或者《C++图算法》的内容。
+
+## 4.3 Prim算法和优先级搜索
+
+ **Dense graphs: O(n^2)**
+
+对于一个无向图G有n个节点和m条边，找到一个图连接所有节点，任意节点到其他节点只有一条简单路径，并且所有边的权重之和最小，这棵生成树就是最小生成树。
+
+![Random graph](https://raw.githubusercontent.com/e-maxx-eng/e-maxx-eng/master/img/MST_before.png)
+
+![MST of this graph](https://raw.githubusercontent.com/e-maxx-eng/e-maxx-eng/master/img/MST_after.png)
+
+**Input**
+
+```
+6
+0 1 2
+0 3 1
+0 4 4
+1 3 3
+1 5 7
+1 2 3
+2 3 5
+2 5 8
+3 4 9
+```
+
+**Program**
+
+```c++
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+const int INF = 0x0fffffff; // weight INF means there is no edge
+int n = 6;
+vector<vector<int>> adj(n, vector<int>(n, INF)); // adjacency matrix of graph
+
+struct Edge {
+    int w = INF, to = -1;
+};
+
+void prim() {
+    int total_weight = 0;
+    vector<bool> selected(n, false);
+    vector<Edge> min_e(n);
+    min_e[0].w = 0;
+
+    for (int i=0; i<n; ++i) {
+        int v = -1;
+        for (int j = 0; j < n; ++j) {
+            if (!selected[j] && (v == -1 || min_e[j].w < min_e[v].w))
+                v = j;
+        }
+
+        if (min_e[v].w == INF) {
+            cout << "No MST!" << endl;
+            exit(0);
+        }
+
+        selected[v] = true;
+        total_weight += min_e[v].w;
+        if (min_e[v].to != -1)
+            cout << (v + 1) << " - " << (min_e[v].to + 1) << ": " << min_e[v].w << endl;
+
+        for (int to = 0; to < n; ++to) {
+            if (adj[v][to] < min_e[to].w)
+                min_e[to] = {adj[v][to], v};
+        }
+    }
+
+    cout << total_weight << endl;
+}
+
+int main()
+{
+    int v, w, weight;
+    cin >> n;
+    while(cin >> v >> w >> weight){
+        adj[v][w] = weight;
+        adj[w][v] = weight;
+    }
+    prim();
+}
+```
+
+**Output**
+
+```shell
+4 - 1: 1
+2 - 1: 2
+3 - 2: 3
+5 - 1: 4
+6 - 2: 7
+17
+```
+
+算法思路：
+
+最外层的循环起到的作用是确保把每个点都要加入到最小生成树里面来，每次最开始都是先从没有被访问的点里面选一个交叉边权值最小的（程序22-27行），然后此点被加入到已经访问过的节点（标记访问过），这时候用到动态规划的思想，也就是需要理解数组`min_e[i]`的意思，我们用数组来存储未被访问过的节点`i`到所有已经访问过的节点的最小权值，也就是说，这个数组保存了上一轮的最小权值，这次如果遇到更小的，那么就更新，否则不更新。这样就避免了每次都去重新算一遍交叉边的最小权值。
+
+
+
+**Sparse graphs O(m log n)**
+
+```c++
+#include <iostream>
+#include <vector>
+#include <set>
+#include <algorithm>
+
+using namespace std;
+
+const int INF = 0x0fffffff; // weight INF means there is no edge
+
+struct Edge {
+    int w = INF, to = -1;
+
+    bool operator<(Edge const& other) const 
+    {
+        return w < other.w;
+    }
+};
+
+int n = 6;
+vector<vector<Edge>> adj(n); // adjacency matrix of graph
+
+void prim() {
+    int total_weight = 0;
+    vector<Edge> min_e(n);
+    min_e[0].w = 0;
+    set<Edge> q;
+    q.insert({0, 0});
+    vector<bool> selected(n, false);
+    for (int i = 0; i < n; ++i) {
+        if (q.empty()) {
+            cout << "No MST!" << endl;
+            exit(0);
+        }
+
+        int v = q.begin()->to;
+        selected[v] = true;
+        total_weight += q.begin()->w;
+        q.erase(q.begin());
+
+        if (min_e[v].to != -1)
+            cout << v << " " << min_e[v].to << endl;
+
+        for (Edge e : adj[v]) {
+            if (!selected[e.to] && e.w < min_e[e.to].w) {
+                q.erase({min_e[e.to].w, e.to});
+                min_e[e.to] = {e.w, v};
+                q.insert({e.w, e.to});
+            }
+        }
+    }
+
+    cout << total_weight << endl;
+}
+
+int main()
+{
+    int v, w, weight;
+    cin >> n;
+    while(cin >> v >> w >> weight){
+        adj[v].push_back({weight, w}); 
+        adj[w].push_back({weight, v});
+    }
+    prim();
+
+    return 0;
+}
+```
+
+思路和用邻接矩阵表示的方法相差无几，区别在于适用对象是稠密图还是稀疏图。
+
+
+
+## 4.4 Kruskal算法
+
+Kruskal算法和Prim算法的区别在于，先加入n个点，逐次加入n-1条边，每次选一个权值最小的边加入，如果不会出现回边则加入，否则不加，对于回边的判断可以用并查集来实现。
+
+```c++
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Edge {
+    int u, v, weight;
+
+    bool operator<(Edge const& other) 
+    {
+        return weight < other.weight;
+    }
+};
+
+int n = 6, total_weight = 0;
+vector<Edge> edges, result;
+vector<int> parent(n), setRank(n);
+
+void make_set(int v) {
+    parent[v] = v;
+    setRank[v] = 0;
+}
+
+int find_set(int v) {
+    if (v == parent[v])
+        return v;
+    return parent[v] = find_set(parent[v]);
+}
+
+void union_sets(int a, int b) {
+    a = find_set(a);
+    b = find_set(b);
+    if (a != b) {
+        if (setRank[a] < setRank[b])
+            swap(a, b);
+        parent[b] = a;
+        if (setRank[a] == setRank[b])
+            setRank[a]++;
+    }
+}
+
+void kruskal()
+{
+    for (int i = 0; i < n; i++)
+        make_set(i);
+
+    sort(edges.begin(), edges.end());
+
+    int num = 0;
+    for (Edge e : edges) {
+        if (find_set(e.u) != find_set(e.v)) {
+            total_weight += e.weight;
+            result.push_back(e);
+            union_sets(e.u, e.v);
+            ++num;
+            if (num == n - 1) return; //already insert n-1 edges
+        }
+    }
+}
+
+ostream & operator<<(ostream & os, vector<Edge> & edges)
+{
+    for (auto e : edges)
+        os << e.u << " - " << e.v << ": " << e.weight << endl;
+
+    return os;
+}
+
+int main()
+{
+    int v, w, weight;
+    cin >> n;
+    while(cin >> v >> w >> weight){
+        edges.push_back({v, w, weight});
+    }
+    kruskal();
+    cout << total_weight << endl;
+    cout << result;
+
+    return 0;
+}
+```
+
+其中`setRank`相当于按秩（或者理解为树的高度）进行的路径压缩。通过并查集的数据结构来区分访问过的点和没访问过的点。
+
+
+
+## 4.5 Boruvka算法
+
+此种算法和Kruskal算法比较接近，使用的情景并不多，不做展开了。
+
+
+
+## 4.6 欧几里得MST
+
+给定平面上的n个点，找出连接所有这些点的最短线段的集合。
 
 
 
@@ -1875,3 +2166,5 @@ POJ 3660（Floyd求传递闭包）
 # 第六章 网络流
 
 最小割模型汇总：<https://blog.csdn.net/qq_35649707/article/details/77482691>
+
+网络流的典型练习：网络流24题
