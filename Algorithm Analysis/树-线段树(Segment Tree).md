@@ -288,6 +288,7 @@ long long query(int k, int leftPos, int rightPos)
 - [x] 洛谷-P3374 【模板】树状数组1（可以用线段树，单点修改，区间查询）
 - [x] 洛谷-P3372 【模板】线段树1（区间修改 + 区间查询）
 - [x] 洛谷-P1801 黑匣子（权值线段树，也可以Spaly Tree, AVL或者堆）
+- [ ] 完美正方形 蓝桥杯
 
 
 - [ ] HDU 3642

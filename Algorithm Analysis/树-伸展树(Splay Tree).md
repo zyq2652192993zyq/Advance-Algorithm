@@ -25,3 +25,12 @@ POJ 3580
 7.3 伸展树的效率分析 
 
 7.4 伸展树的应用举例 
+
+利用 Splay 来维护二叉排序树
+
+参考实现：
+
+*  Splay 模板 + 详细注释 <https://oi.men.ci/splay-template/>
+* <https://oi.men.ci/splay-notes-3/>
+* <https://oi.men.ci/splay-notes-2/>
+* <https://oi.men.ci/splay-notes-1/>
