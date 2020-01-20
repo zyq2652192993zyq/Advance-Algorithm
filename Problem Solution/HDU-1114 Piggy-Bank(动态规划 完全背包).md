@@ -50,7 +50,7 @@ This is impossible.
 using namespace std;
 
 //无效值，不要用0x7FFFFFFF，执行加运算后会变成负数
-const int INF = 0x0FFFFFFF; 
+const int INF = 0x0ffffff; 
 
 int main()
 {

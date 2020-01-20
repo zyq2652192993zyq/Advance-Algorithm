@@ -138,7 +138,7 @@ void LIS()
 
     for (int j = 1; j < 10; ++j) {
         int maxLength = 0;
-        int pos = 0;
+        int pos = -1;
         for (int i = 0; i < j; ++i) {
             if (sequence[j] > sequence[i] && maxLength < d[i]) {
                 maxLength = d[i];

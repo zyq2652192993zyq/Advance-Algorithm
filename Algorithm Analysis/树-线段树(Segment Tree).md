@@ -1,5 +1,10 @@
 > # 树-线段树(Segment Tree)
 
+题单：
+
+* <https://vjudge.net/article/467>
+* <https://vjudge.net/article/1385>
+
 
 #1 线段树的背景
 
