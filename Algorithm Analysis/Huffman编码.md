@@ -244,3 +244,4 @@ number   0   1   2   3   4   5   6   7   8   9  10  11  12  13
 - [ ] OpenJ_Bailian-4080 Huffman coding tree
 - [ ] HihoCoder-1111 Huffman Code
 - [ ] CodeForces-700D Huffman Coding on Segment
+- [x] POJ 1862 stripes（利用的是霍夫曼编码的思想）
