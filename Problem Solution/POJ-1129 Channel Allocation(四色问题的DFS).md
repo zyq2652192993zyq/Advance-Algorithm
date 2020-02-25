@@ -63,8 +63,7 @@ D:ABC
 
 using namespace std;
 
-vector<int> line(26, 0);
-vector<vector<int>> denseGraph(26, line);
+vector<vector<int> > denseGraph(26, vector<int>(26));
 vector<int> history(26, 0);
 int pointNum, channelNum, cnt = 0;
 

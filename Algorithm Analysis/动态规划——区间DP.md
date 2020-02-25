@@ -23,8 +23,15 @@
 典型题目：
 
 - [x] Uva 348 Optimal Array Multiplication Sequence/ ZOJ 1276
+
 - [x] 洛谷 1063 能量项链
+
 - [ ] [十个利用矩阵乘法解决的经典题目](http://www.matrix67.com/blog/archives/276)
+
 - [ ] 洛谷 P1880 石子合并
+
 - [ ] 洛谷 P1005 矩阵取数游戏
-- [ ]  ​
+
+- [x] ​POJ 3280 Cheapest Palindrome
+
+- [x] poj2955 Brackets （最大括号匹配，区间动态规划）

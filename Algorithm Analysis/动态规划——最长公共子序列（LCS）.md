@@ -1,6 +1,6 @@
 > # 动态规划-最长公共子序列(LCS)
 
-求两个序列X和Y的最长公共子序列。
+求两个序列X和Y的最长公共子序列（可以不连续）。
 
 设序列$X=\left(x_{1}, x_{2}, \cdots, x_{m}\right)$和$y = \left(y_{1}, y_{2}, \cdots, y_{n}\right)$的最长公共子序列为$Z=\left(z_{1}, z_{2}, \cdots, z_{k}\right)$
 
@@ -26,12 +26,8 @@ using namespace std;
 
 void longestCommonSequence(const string &s1, const string & s2)
 {
-    vector<int> line(201);
-    vector<vector<int>> d(201, line); /* 字符串最大长度为200 */
-
+    vector<vector<int>> d(201, vector<int>(201, 0)); /* 字符串最大长度为200 */
     int m = s1.size(), n = s2.size();
-    for (int i = 0; i <= m; ++i) d[i][0] = 0;
-    for (int i = 0; i <= n; ++i) d[0][i] = 0;
 
     for (int i = 1; i <= m; ++i){
         for (int j = 1; j <= n; ++j){
@@ -66,7 +62,7 @@ int main()
 
 using namespace std;
 
-void printCommonSequence(const string &s1, const int m, const string &s2, const int n, vector<vector<int>> &p)
+void printCommonSequence(const string & s1, const int m, const string & s2, const int n, vector<vector<int>> & p)
 {
     if (m == 0 || n == 0) return;
     if (p[m][n] == 1) {
@@ -83,13 +79,9 @@ void printCommonSequence(const string &s1, const int m, const string &s2, const 
 
 void longestCommonSequence(const string &s1, const string & s2)
 {
-    vector<int> line(201);
-    vector<vector<int>> d(201, line); /* 字符串最大长度为200 */
-    vector<vector<int>> p(201, line);
-
+    vector<vector<int>> d(201, vector<int>(201, 0)); /* 字符串最大长度为200 */
+    vector<vector<int>> p(201, vector<int>(201, 0));
     int m = s1.size(), n = s2.size();
-    for (int i = 0; i <= m; ++i) d[i][0] = 0;
-    for (int i = 0; i <= n; ++i) d[0][i] = 0;
 
     for (int i = 1; i <= m; ++i){
         for (int j = 1; j <= n; ++j){
@@ -127,7 +119,12 @@ int main()
 
 典型题目：
 
+- [ ] 洛谷 P1439 [模板]最长公共子序列（用二维数组会MLE，需要用nlogn的方法）
+
+
 - [x] POJ 1458 Common Subsequence
 - [x] HDU 1503 Advanced Fruits
 - [x] HDU 1080 Human Gene Functions
 - [x] LeetCode 1143 Longest Common Subsequence
+
+另外考虑如果是字符串类型的问题，要求子串连续，那么最长匹配怎么求解？比如`abbcd`和`abbe`，那么`abb`就是最长的公共子串。
