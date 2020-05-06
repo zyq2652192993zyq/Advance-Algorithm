@@ -4,6 +4,7 @@
 
 * <https://vjudge.net/article/467>
 * <https://vjudge.net/article/1385>
+* <https://www.cnblogs.com/flashhu/p/9651161.html>
 
 
 #1 线段树的背景
@@ -163,7 +164,7 @@ void intervalChange(int k, int leftPos, int rightPos, int value)
 		return;
 	}
 
-	pushDown(k);
+	pushDown(k); //标记下传
 
 	int mid = v[k].left + ((v[k].right - v[k].left) >> 1);
 	if (rightPos <= mid) intervalChange(k << 1, leftPos, rightPos, value);
@@ -233,25 +234,42 @@ long long query(int k, int leftPos, int rightPos)
 
 
 
-#3 线段树在一些经典问题中的应用
+# 扫描线算法
 
-* 洛谷P1908 逆序对
-* codeforces 540 E. Infinite Inversions (分类思想+线段树)求逆序对
-* HDU 1394                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+参考资料：https://www.bilibili.com/video/BV144411Z7tx
 
-   5.3.2 矩形覆盖问题 
+最典型的两个题目
 
-5.4 线段树的扩展
+- [ ] 矩形覆盖问题
+- [ ] 天际线问题
 
- 	5.4.1 用线段树优化动态规划 
 
-​	5.4.2 将线段树扩展到高维 
 
-​	5.4.3 线段树与平衡树的结合
+# 线段树优化动态规划
 
-5.5 线段树与其他数据结构的比较 
 
-5.6 线段树的应用举例 
+
+# 高维线段树
+
+
+
+
+
+# 线段树与平衡树的结合
+
+解决动态区间第K大问题。
+
+- [ ] ZOJ 2112 Dynamic Rankings
+
+
+
+# 线段树的典型应用
+
+线段树可以与约瑟夫环问题结合，具体查看《典型问题——约瑟夫环问题》
+
+
+
+
 
 
 
@@ -265,7 +283,7 @@ long long query(int k, int leftPos, int rightPos)
 * `jiry`线段树
 * `zkw`线段树（`zkw`是张昆玮拼音的所写，源自其论文《统计的力量》实际上是线段树的非递归写法）
 * 线段树合并
-* 可持久化线段树 / 函数式线段树
+* 主席树/可持久化线段树 / 函数式线段树
 * 线段树套线段树（树套树）
 * 扫描线算法
 * 权值线段树
@@ -306,8 +324,9 @@ long long query(int k, int leftPos, int rightPos)
 - [ ] HOJ 1119 / POJ 1151 / HDU 1542
 - [ ] POJ 2991
 - [ ] POJ 3225 3667 2528 3468
+- [ ] UVA11983——线段树求矩形覆盖K次以上面积
 
-学好线段树才可以学好可持久化，比如入门的可持久化数组（等价可持久化线段树/平衡树），由此衍生很多可持久化的数据结构
+学好线段树才可以学好可持久化，比如入门的可持久化数组（进而学习可持久化线段树/平衡树），由此衍生很多可持久化的数据结构
 
 <https://blog.csdn.net/u013480600/article/category/2138267>
 

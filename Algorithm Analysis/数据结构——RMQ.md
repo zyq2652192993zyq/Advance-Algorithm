@@ -1,5 +1,7 @@
 > # 数据结构——RMQ
 
+* 参考资料：LCA与RMQ互化：https://www.cnblogs.com/Parsnip/p/12660750.html
+
 范围最小值问题（Range Minimum Query，RMQ）。给出一个$n$个元素的数组$A_1,A_2,\cdots, A_n$，设计一个数据结构，支持查询操作Query(L,R): 计算$min(A_L,A_{L+1},\cdots,A_R)$.
 
 # 利用ST表解决RMQ问题

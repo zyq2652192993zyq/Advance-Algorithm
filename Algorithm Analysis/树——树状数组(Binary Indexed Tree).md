@@ -54,3 +54,16 @@ POJ 2299
 
 6.7 树状数组的应用举例 
 
+参考视频：
+
+* 树状数组与倍增：https://www.bilibili.com/video/BV1e7411s7gy
+
+# 可持久化数据结构
+
+参考资料：https://www.bilibili.com/video/BV1Z4411Z7tj
+
+https://www.bilibili.com/video/BV1ax411d7cb
+
+https://www.bilibili.com/video/BV1LW411e7jo
+
+https://www.bilibili.com/video/BV1cb411i7PA

@@ -1,5 +1,7 @@
 > # 字符串算法-字符串HASH
 
+https://blog.csdn.net/dhdhdhx/article/details/103149651?depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-3&utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-3
+
 选自“邝斌的ACM模板（新）” 
 
 - [ ] POJ 2752

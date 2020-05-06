@@ -6,3 +6,4 @@
 
 <https://zhuanlan.zhihu.com/p/55322598> CDQ与整体二分
 
+https://www.bilibili.com/video/BV1y4411k7qk

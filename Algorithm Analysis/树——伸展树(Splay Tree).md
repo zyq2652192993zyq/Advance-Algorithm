@@ -1,6 +1,9 @@
 > # 树-伸展树(Splay Tree)
 
+参考资料：
 
+* https://www.bilibili.com/video/BV1wt411u7xL
+* https://www.bilibili.com/video/BV1iW41177o6
 
 # 典型题目
 

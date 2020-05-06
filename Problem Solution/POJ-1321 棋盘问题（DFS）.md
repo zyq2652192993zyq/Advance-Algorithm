@@ -40,62 +40,73 @@
 
 ```c++
 #include <iostream>
+#include <iomanip>
 #include <vector>
+#include <cmath>
 #include <string>
+#include <climits>
+#include <cstdio>
+#include <queue>
+#include <stack>
+#include <map>
+#include <set>
+#include <set>
 #include <algorithm>
 
 using namespace std;
 
-int boardSize, chessNum;
-int sum; //方案总数
-vector<int> judge(8, 0);  //记录每一列上是否放置了棋子
-vector<char> line(8, ' ');
-vector<vector<char>> position(8, line); //存储棋盘
-int curCheess; //已经放入棋盘的棋子数
+int n, k;
+int curChess = 0;
+int res = 0;
+vector<vector<int> > grid(10, vector<int>(10));
+vector<bool> used(10, false);
+// int direction[4][2] = {{1,0}, {-1,0}, {0,1}, {0,-1}};
 
-void dfs(int k)
+
+void DFS(int row)
 {
-    if (curCheess == chessNum){
-        ++sum;
-        return;
-    }
+	if (curChess == k) { //已经正确摆放k个棋子
+		++res; return;
+	}
 
-    if (k >= boardSize) return;
+	if (row >= n) return; //行数超出棋盘范围
+	//在第row行放置棋子
+	for (int col = 0; col < n; ++col) {
+		if (!used[col] && grid[row][col] == '#') {
+			++curChess;
+			used[col] = true;
 
-    for (int i = 0; i < boardSize; ++i){
-        if (judge[i] == 0 && position[k][i] == '#'){
-            judge[i] = 1;
-            ++curCheess;
-            dfs(k + 1);
-            judge[i] = 0;
-            --curCheess;
-        }
-    }
+			DFS(row + 1);
 
-    dfs(k + 1);
+			used[col] = false;
+			--curChess;
+		}
+	}
+	//在第row行不放置棋子
+	DFS(row + 1);
 }
+
 
 int main()
 {
-    while(cin >> boardSize >> chessNum){
-        if (boardSize == -1 && chessNum == -1) break;
-        
-        fill(judge.begin(), judge.end(), 0);
-        sum = 0; curCheess = 0;
-        
-        //记录棋盘里可以摆放棋子的列数位置
-        for (int i = 0; i < boardSize; ++i){
-            string line;
-            cin >> line;
-            for (size_t j = 0; j < line.size(); ++j)
-                position[i][j] = line[j];
-        }
-        
-        dfs(0);
+	std::ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
-        cout << sum << endl;
-        
-    }  
+    while ((cin >> n >> k) && n != -1 && k != -1) {
+    	for (int i = 0; i < n; ++i) {
+    		string line; cin >> line;
+    		for (int j = 0; j < n; ++j) {
+    			grid[i][j] = line[j];
+    		}
+    	}
+
+    	DFS(0);
+    	cout << res << endl;
+
+    	fill(used.begin(), used.end(), false);
+    	curChess = res = 0;
+    }
 
     return 0;
 }
@@ -104,5 +115,3 @@ int main()
 类似八皇后问题，但是并不是每一行都可以放置棋子，也并不是可以放置的行数是相邻的。
 
 84行又一次调用`dfs(k + 1)`是因为如果本行不放入任何棋子，而从下一行开始搜索。
-
-这里程序较长是因为我们增加了一个基础的`class matrix`，可以作为模板，使用起来较为方便。

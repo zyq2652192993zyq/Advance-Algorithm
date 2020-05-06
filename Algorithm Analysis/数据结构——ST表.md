@@ -1,5 +1,9 @@
 > # 数据结构——ST表
 
+参考资料：
+
+* https://www.bilibili.com/video/BV1LW411e7jo
+
 用于解决 **可重复贡献问题** 的数据结构。
 
 Sparse-Table算法是Tarjan发明的，预处理时间是$O(n \log n)$，查询只需要$O(1)$，常数很小。

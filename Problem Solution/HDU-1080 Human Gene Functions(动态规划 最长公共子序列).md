@@ -1,4 +1,4 @@
-> #HDU-1080 Human Gene Functions(动态规划 最长公共子序列)
+> # HDU-1080 Human Gene Functions(动态规划 最长公共子序列)
 
 # Problem Description
 
@@ -119,5 +119,5 @@ int main()
 }
 ```
 
-状态转移，其中$dp[i,j]$表示$s1[i]$和$s2[j]$处能取到的最大分数。
+状态转移，其中$dp[i][j]$表示$s1[i]$和$s2[j]$处能取到的最大分数。
 

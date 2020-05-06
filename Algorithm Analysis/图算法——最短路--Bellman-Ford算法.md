@@ -1,5 +1,11 @@
 > # 图算法——最短路之Bellman-Ford算法
 
+参考资料：
+
+* https://www.bilibili.com/video/BV15E411v7Wx
+* https://www.bilibili.com/video/BV15E411v7bE
+* https://www.bilibili.com/video/BV1b7411z7PP
+
 Bellman-Ford算法和SPFA都是用来求解单源最短路问题，还可以用来判断负环。
 
 # Bellman-Ford算法求最短路
@@ -168,5 +174,5 @@ int main()
 - [ ] POJ 180
 - [ ] HDU 2145(SPFA)
 - [ ] POJ 1511（SPFA）
-- [ ] ​
+- [ ] 
 
