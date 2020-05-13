@@ -1,5 +1,15 @@
 > # 字符串算法-AC自动机
 
+参考资料：https://www.luogu.com.cn/training/4897
+
+P3808 【模板】AC自动机（简单版）
+P3796 【模板】AC自动机（加强版）
+P5357 【模板】AC自动机（二次加强版）
+
+
+
+
+
 * 参考链接：https://www.cnblogs.com/Parsnip/p/12369642.html
 
 **AC自动机的基本应用**

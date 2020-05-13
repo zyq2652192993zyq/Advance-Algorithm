@@ -1,5 +1,20 @@
 > # Trie树(字典树、单词查找树、前缀树)
 
+
+
+参考资料：https://www.luogu.com.cn/training/4897
+
+P3369 【模板】普通平衡树
+P2922 [USACO08DEC]Secret Message G
+P3065 [USACO12DEC]First! G
+P4735 最大异或和
+P5283 [十二省联考2019]异或粽子
+P3346 [ZJOI2015]诸神眷顾的幻想乡
+
+
+
+
+
 # 基本模型
 
 实现一个 `Trie `(前缀树)，包含 `insert`, `search`, 和 `startsWith `这三个操作。

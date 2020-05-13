@@ -1,5 +1,14 @@
 > # 动态规划——1基础DP
 
+洛谷题单：
+
+* https://www.luogu.com.cn/training/1435
+* https://www.luogu.com.cn/training/3045
+
+
+
+
+
 # 矩阵中的最大正方形
 
 - [x] LeetCode 221.最大正方形
@@ -24,7 +33,7 @@ d[i][j] = min(d[i - 1][j], min(d[i - 1][j - 1], d[i][j - 1])) + 1;
 $$
 也就是其左上、上方、左侧元素中最小的值加1。
 
-![image-20200425103611172](F:\Project\Advanced-Algorithm\Algorithm Analysis\动态规划——1基础DP.assets\image-20200425103611172.png)
+![image-20200425103611172](D:\Kylin\Advance-Algorithm\Algorithm Analysis\动态规划——1基础DP.assets\image-20200425103611172.png)
 
 ```c++
 class Solution {
