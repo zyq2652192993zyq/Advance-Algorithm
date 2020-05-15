@@ -1,5 +1,9 @@
 > # CodeForces-1008A Romaji（基础字符串）
 
+Tags: `Implementation` `strings` `900`
+
+Links: http://codeforces.com/contest/1008/problem/A
+
 # Description
 
 Vitya has just started learning Berlanese language. It is known that Berlanese uses the Latin alphabet. Vowel letters are "a", "o", "u", "i", and "e". Other letters are consonant.
