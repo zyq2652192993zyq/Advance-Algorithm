@@ -68,7 +68,7 @@ vector<int> getNext(string T)
     return next;                            // 返回next矩阵
 }
 
-void KMP(string S, string T)
+void KMP(string S, string T) //T = pattern
 {
     vector<int> next = getNext(T);
     int i = 0, j = 0;

@@ -1,5 +1,7 @@
 > # 动态规划-插头DP
 
+插头DP也被称为轮廓线DP，最先由陈丹绮提出，以及CDQ分治。
+
 参考资料：
 
 * <https://www.cnblogs.com/zinthos/p/3897854.html>
