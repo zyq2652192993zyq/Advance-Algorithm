@@ -13,6 +13,7 @@
 
 - [x] LeetCode 221.最大正方形
 - [x] Aizu - DPL_3_A Largest Square（《挑战程序设计竞赛》数据结构篇）
+- [x]  LeetCode 1277.Count Square Submatrices with All Ones（221题的简单扩展）
 
 在一个由 0 和 1 组成的二维矩阵内，找到只包含 1 的最大正方形，并返回其面积。
 
