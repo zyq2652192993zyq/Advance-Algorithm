@@ -6,9 +6,10 @@
 * <https://blog.csdn.net/u013480600/article/category/1916309>
 * https://www.bilibili.com/video/BV1MV411d7Fz
 * https://www.bilibili.com/video/BV1Z4411x7Kw
+* https://blog.csdn.net/u011815404/category_7955244.html
 
 典型题目：
 
 洛谷 P2622，P1879，P1896，P2704
 
-
+- [ ] LeetCode 1371. Find the Longest Substring Containing Vowels in Even Counts
