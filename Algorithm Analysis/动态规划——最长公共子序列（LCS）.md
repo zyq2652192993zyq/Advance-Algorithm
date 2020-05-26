@@ -353,6 +353,7 @@ aaaa n
 - [x] HDU 1503 Advanced Fruits
 - [x] HDU 1080 Human Gene Functions
 - [x] LeetCode 1143 Longest Common Subsequence
+- [x] LeetCode 1035.Uncrossed Lines
 - [ ] BZOJ 3304: [SHOI2005]带限制的最长公共子序列( LCS )
 
 另外考虑如果是字符串类型的问题，要求子串连续，那么最长匹配怎么求解？比如`abbcd`和`abbe`，那么`abb`就是最长的公共子串。

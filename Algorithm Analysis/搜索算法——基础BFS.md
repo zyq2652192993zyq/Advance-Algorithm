@@ -96,9 +96,11 @@ int main()
 <https://blog.csdn.net/u013480600/article/details/45066957>
 
 - [x] POJ 3984 迷宫问题
+- [x] 一本通-1330：【例8.3】最少步数（经典BFS）
+- [x] 一本通-1359：围成面积
+- [x] 一本通-1248：Dungeon Master（三维迷宫BFS）或 POJ 2251 Dungeon Master
 - [ ] POJ 2049 Finding Nemo ==待深入思考==
 - [ ] POJ 1077 Eight（八数码问题）
-- [ ] CODE[VS] 1225 八数码难题
 - [ ] POJ 2893 MxN Puzzle
 - [ ] CODE[VS] 1004 四子连棋
 - [ ] 双向BFS => 解决八数码问题
