@@ -96,6 +96,7 @@ int main()
 - [x] 一本通-1212：LETTERS（很好的DFS练习）
 - [x] 一本通-1215：迷宫（迷宫类型的DFS的经典练习）
 - [x] 一本通-1216：红与黑（flood fill的典型题目）
+- [x] 一本通-1250：The Castle 或 POJ 1164（稍加思考的DFS，也可以BFS）
 - [x] POJ 1321 棋盘问题（一本通-1217：棋盘问题）
 - [x] LeetCode 51 N Queens
 - [x] LeetCode 52 N Queens II

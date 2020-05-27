@@ -99,6 +99,13 @@ int main()
 - [x] 一本通-1330：【例8.3】最少步数（经典BFS）
 - [x] 一本通-1359：围成面积
 - [x] 一本通-1248：Dungeon Master（三维迷宫BFS）或 POJ 2251 Dungeon Master
+- [x] 一本通-1251：仙岛求药（迷宫类型的BFS）
+- [x] 一本通-1252：走迷宫（二维迷宫型BFS）
+- [x] 一本通-1253：抓住那头牛（一维BFS）
+- [x] 一本通-1254：走出迷宫（二维迷宫型BFS）
+- [x] 一本通-1255：迷宫问题（二维迷宫BFS）
+- [x] 一本通-1256：献给阿尔吉侬的花束（二维迷宫BFS）
+- [x] POJ 1915 Knight Moves（迷宫型BFS）或一本通-1257：Knight Moves
 - [ ] POJ 2049 Finding Nemo ==待深入思考==
 - [ ] POJ 1077 Eight（八数码问题）
 - [ ] POJ 2893 MxN Puzzle
