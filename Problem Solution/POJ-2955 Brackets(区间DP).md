@@ -72,7 +72,7 @@ int maxLen(string & s)
 		for (int i = j - 1; i >= 0; --i) {
 			if ((s[i] == '(' && s[j] == ')') || (s[i] == '[' && s[j] == ']'))
 				d[i][j] = d[i + 1][j - 1] + 2;
-			//只要针对()()()类型
+			//主要针对()()()类型
 			for (int k = i; k <= j; ++k) {
 				d[i][j] = max(d[i][j], d[i][k] + d[k + 1][j]);
 			}
