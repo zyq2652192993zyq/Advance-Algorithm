@@ -21,6 +21,7 @@
 
 - [x] 洛谷-P5569 [SDOI2008]石子合并（线性排列的石子合并，大数据）
 - [ ] POJ-1738 An old Stone Game（楼天城男人八题之一）（https://www.cnblogs.com/acgoto/p/9642578.html）
+- [x]  UVa-348 Optimal Array Multiplication Sequence(线性石子合并，路径输出)
 - [x] 一本通-1274：【例9.18】合并石子（小数据）
 
 ### 朴素区间DP
@@ -312,6 +313,7 @@ int main()
 ## 环形排列的情况
 
 - [x] P1880 [NOI1995]石子合并
+- [x] 洛谷 1063 能量项链（环形合并）
 
 有N堆石子环形排列，现要将石子有序的合并成一堆，规定如下：每次只能移动**相邻**的2堆石子合并，合并花费为新合成的一堆石子的数量。求将这N堆石子合并成一堆的总花费最小（或最大）。
 
@@ -704,8 +706,8 @@ public:
 
 典型题目：
 
-- [x] Uva 348 Optimal Array Multiplication Sequence/ ZOJ 1276
-- [x] 洛谷 1063 能量项链
+- [x] Uva 348 Optimal Array Multiplication Sequence 或 ZOJ 1276
+- [x] 洛谷 1063 能量项链（环形合并）
 - [x] LeetCode 1246.删除回文子数组（字符串回文背景的区间DP）
 - [ ] [十个利用矩阵乘法解决的经典题目](http://www.matrix67.com/blog/archives/276)
 - [ ] 洛谷 P1880 石子合并（大数据，线性排列情况）
