@@ -1,6 +1,6 @@
 > # 搜索算法——基础深度优先搜索
 
-# 八皇后问题
+## 八皇后问题
 
 ```c++
 #include <iostream>
@@ -82,6 +82,58 @@ int main()
 对角线上的检查通过移项发现`abs(row - i) = abs(col - res[i])`，也就是行对应相减，列对应相减，差值的绝对值如果相同，那么肯定在对角线上，只是不知道是主对角线还是次对角线，所以检验变得简单了。
 
 
+
+## 把数字翻译成字符串
+
+给定一个数字，我们按照如下规则把它翻译为字符串：0 翻译成 “a” ，1 翻译成 “b”，……，11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。
+
+**示例 1:**
+
+```
+输入: 12258
+输出: 5
+解释: 12258有5种不同的翻译，分别是"bccfi", "bwfi", "bczi", "mcfi"和"mzi"
+```
+
+**提示：**
+
+* 0 <= num < $2^{31}$
+
+```c++
+class Solution {
+    int cnt;
+    string number;
+    int n;
+public:
+    int translateNum(int num) {
+        std::ios_base::sync_with_stdio(false);
+		cin.tie(NULL);
+		cout.tie(NULL);
+
+        cnt = 0;
+        number = to_string(num);
+        n = number.size();
+        DFS(0);
+
+        return cnt;
+    }
+
+    void DFS(int pos) {
+        for (int len = 1; len <= 2; ++len) {
+            if (pos + len - 1 < n && stoi(number.substr(pos, len)) <= 25) {
+                if (len == 2 && number.substr(pos, len)[0] - '0' == 0) continue;
+
+                if (pos + len - 1 == n - 1) {
+                    ++cnt;
+                }
+                else DFS(pos + len);
+            }
+        }
+    }
+};
+```
+
+属于搜索框架的第一种，注意如果不加上`22`行的代码，会在`506`这个样例错误，也就是`06`不能按照6来计算，所以需要去掉两位数中0开头的数字。
 
 
 
