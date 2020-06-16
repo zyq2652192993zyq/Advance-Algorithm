@@ -47,3 +47,4 @@ public:
 - [x] LeetCode 118 Pascal's Triangle
 - [x] LeetCode 119 Pascal's Triangle II
 - [x] POJ 3187 Backward Digit Sums(其实题面是倒置的Pascal三角形，本质是排列组合问题)
+- [x] Project Euler 15: Lattice paths（组合数计算）

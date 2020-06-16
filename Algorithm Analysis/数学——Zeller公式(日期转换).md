@@ -17,3 +17,7 @@ $$
 * d 是日数。
 * [] 是取整运算。
 * mod 是求余运算。
+
+典型例题：
+
+- [x] Project Euler 19: Counting Sundays
