@@ -1,20 +1,28 @@
 > # 字符串算法-AC自动机
 
-参考资料：https://www.luogu.com.cn/training/4897
+参考资料：
 
-P3808 【模板】AC自动机（简单版）
-P3796 【模板】AC自动机（加强版）
-P5357 【模板】AC自动机（二次加强版）
-
-
-
-
+* https://www.luogu.com.cn/training/4897
 
 * 参考链接：https://www.cnblogs.com/Parsnip/p/12369642.html
+
+* [一本通提高篇 AC自动机](https://blog.csdn.net/dhdhdhx/article/details/105440297)
+* 
+
+
+
+
+
+
+
+
 
 **AC自动机的基本应用**
 
 - [ ] UVA 1449 Dominating Patterns(AC自动机)：注意输入中有重复单词输入的情况。
+- [ ] P3808 【模板】AC自动机（简单版）
+- [ ] P3796 【模板】AC自动机（加强版）
+- [ ] P5357 【模板】AC自动机（二次加强版）
 - [x] HDU 2222 Keywords Search(AC自动机)：给你一个文本和多个单词，问你出现了多少个单词。注意单词可能会重复。
 - [x] HDU 2896 病毒侵袭(AC自动机)：AC自动机基本应用。
 - [ ] HDU 3065 病毒侵袭持续中(AC自动机)：AC自动机基本应用。

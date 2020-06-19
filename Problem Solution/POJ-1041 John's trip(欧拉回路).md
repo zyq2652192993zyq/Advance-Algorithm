@@ -45,96 +45,106 @@ Round trip does not exist.
 
 ```c++
 #include <iostream>
+#include <iomanip>
+#include <string>
 #include <vector>
+#include <queue>
 #include <stack>
+#include <list>
+#include <map>
+#include <set>
 #include <algorithm>
+#include <cmath>
+#include <climits>
 
 using namespace std;
 
-vector<int> STREET(1996, 0);
-vector<vector<int>> matrix(45, STREET); //存储 matrix[点][边] = 点 的矩阵 
-vector<bool> edgeVisited(1996, false); //边是否访问
-vector<int> degree(45, 0); //点的度数
+int vertexNum, edgeNum, start;
+vector<vector<int> > grid(50, vector<int>(2000, 0));
+vector<bool> edgeUsed(2000, false);
+vector<int> degree(50, 0);
 stack<int> s;
-int max_junction = 0, max_street = 0, start = 0;
 
-ostream & operator<<(ostream & os, stack<int> &s)
+void init()
 {
-    while (!s.empty()){
-        os << s.top() << " ";
-        s.pop();
-    }
+	for (int i = 1; i <= vertexNum; ++i) 
+		fill(grid[i].begin() + 1, grid[i].begin() + 1 + edgeNum, 0);
 
-    return os;
+	fill(edgeUsed.begin() + 1, edgeUsed.begin() + 1 + edgeNum, false);
+	fill(degree.begin() + 1, degree.begin() + 1 + vertexNum, 0);
 }
 
-void EulerPath(int start)
+bool degree_check()
 {
-    for (int i = 1; i <= max_street; ++i){
-        if (!edgeVisited[i] && matrix[start][i]){
-            edgeVisited[i] = true;
-            EulerPath(matrix[start][i]);
-            s.push(i);
-        }
-    }
+	for (int i = 1; i <= vertexNum; ++i) {
+		if (degree[i] & 1) return false;
+	}
+	return true;
 }
+
+void EulerCircuit(int from)
+{
+	for (int i = 1; i <= edgeNum; ++i) {
+		if (!edgeUsed[i] && grid[from][i]) {
+			edgeUsed[i] = true;
+			int to = grid[from][i];
+			EulerCircuit(to);
+			s.push(i);
+		}
+	}
+}
+
+void printPath()
+{
+	while (!s.empty()) {
+		cout << s.top() << ' ';
+		s.pop();
+	}
+	cout << endl;
+}
+
+
+void solve()
+{
+	if (!degree_check()) cout << "Round trip does not exist." << endl;
+	else EulerCircuit(start), printPath();
+
+	init();
+}
+
 
 int main()
 {
-    bool flag = true, next = true;
+	std::ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
 
-    int junction1 = 0, junction2 = 0, street = 0; 
-    while(cin >> junction1 >> junction2){
-        if (junction1 == 0 && junction2 == 0){
-            if (next){
-                bool exist = true;
-                for (int i = 1; i <= max_junction; ++i){
-                    if (degree[i] % 2 != 0) 
-                        exist = false;
-                }
+	int from, to, street;
+	bool startFind = false;
+	while (cin >> from >> to) {
+		if (from == 0 && to == 0) {
+			if (vertexNum) solve();
+			else break;
+		}
+		else {
+			cin >> street;
+			vertexNum = max(vertexNum, max(from, to));
+			edgeNum = max(edgeNum, street);
 
-                if (exist){
-                    EulerPath(start);
-                    cout << s << endl;
-                }
-                else{
-                    cout << "Round trip does not exist." << endl;
-                }
-                
-                //清理工作
-                fill(STREET.begin() + 1, STREET.begin() + max_street + 1, 0);
-                fill(edgeVisited.begin() + 1, edgeVisited.begin() + max_street + 1, false);
-                fill(degree.begin() + 1, degree.begin() + max_junction + 1, 0);
-                for (int i = 1; i <= max_junction; ++i)
-                    fill(matrix[i].begin() + 1, matrix[i].begin() + 1 + max_street, 0);
-                max_junction = max_street = start = 0; 
-                flag = true;
-                junction1 = junction2 = street = 0;
-                next = false;
-            }
-            else break;
-        }
-        else{
-            cin >> street;
+			if (!startFind) { start = min(from, to); startFind = true; } //寻找起始点
 
-            matrix[junction1][street] = junction2;
-            matrix[junction2][street] = junction1;
-            ++degree[junction1];
-            ++degree[junction2];
+			grid[from][street] = to;
+			grid[to][street] = from;
+			++degree[from], ++degree[to];
+		}
+	}
 
-            if (flag) {
-                start = min(junction1, junction2); //确定欧拉路径的起始点
-                flag = false;
-            }
-
-            max_junction = max(max_junction, max(max_junction, junction2)); //确定点的数量
-            max_street = max(max_street, street); //确定边的数量
-            next = true;
-        }
-    }
-
-    return 0;
+	return 0;
 }
 ```
 
-无向图的欧拉路径，并且要求回到原点，依次检查的是连通性和度数。本题没有检查连通性，和普通路径搜索需要记录步数不同，本体不需要额外变量记录步数，因为出发点是确定的，那么必须回到出发点才能保证点的度数是偶数。此题额外使用了栈来存储访问的节点。试问如果要找字典序最大的路径呢？只需要在遍历路径的向量时候，从末尾向前遍历即可。
+题目有点长，简单翻译一下，需要走遍所有的`street`，回到起点，每条边只能走一次。输入的部分前两个数是顶点号，第三个数是边的号码，每组输入以两个0结尾，最后以两个0终止输入。如果存在欧拉回路，起始点以第一个输入的两个顶点里较小的号码组成，访问边的时候，尽可能从序号小的开始访问。如果存在回路，按顺序输出依次走过的边，否则输出`Round trip does not exist.`，注意末尾有个`.`。
+
+很明显的欧拉回路题，不过有一点比较意外，以往的题目都是两个顶点之间只会有一条边，但是本题两个顶点间可能存在多条边，所以用矩阵`grid[from][i] = to`来表示从顶点`from`经过标号为`i`的边可以到达顶点`to`，否则为0。题目在最后一段指出图是连通的，所以就不要进行连通性检验，只需要检查节点度数是否为偶数，然后输出欧拉路径即可。
+
+> 一个小插曲，看到来源是`Central Europe 1995`，结合题目的数据，这道题很有可能出于1995年4月4日，或者比赛当天是1995年4月4日，不影响做题的。

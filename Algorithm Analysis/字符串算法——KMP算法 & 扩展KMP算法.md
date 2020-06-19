@@ -1,12 +1,14 @@
 > # 字符串算法-KMP算法 & 扩展KMP算法
 
-参考：
+参考资料：
 
-<https://blog.csdn.net/u013480600/article/details/44646517
+* <https://blog.csdn.net/u013480600/article/details/44646517
 
-邝斌带你飞专题
+* 邝斌带你飞专题
+* [一本通提高篇 KMP算法](https://blog.csdn.net/dhdhdhx/article/details/103208555)
+* [LOJ 一本通提高篇2.2KMP算法 例题+练习（坑）](https://blog.csdn.net/seeker_LJYing/article/details/96422953)
 
-# KMP算法——查找模式串在文本串中是否出现
+## KMP算法——查找模式串在文本串中是否出现
 
 查找模式串在文本串中是否出现是KMP的模板题，或者说是查找模式串在文本串中第一次出现的位置。
 
@@ -14,7 +16,7 @@
 
 
 
-# KMP算法——统计模式串在文本串中出现的次数
+## KMP算法——统计模式串在文本串中出现的次数
 
 给定模式串和文本串，查找模式串在文本串中的所有出现位置并输出。
 
@@ -22,11 +24,11 @@
 
 
 
-# KMP算法——求多个字符串的LCM
+## KMP算法——求多个字符串的LCM
 
 
 
-# Z函数——
+## Z函数——
 
 扩展KMP算法也叫做Z函数。
 
