@@ -1,2 +1,2 @@
-> # 字符串算法- Karp-Rabin算法
+> # 字符串算法——Rabin-Karp算法
 
