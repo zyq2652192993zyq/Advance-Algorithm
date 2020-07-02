@@ -2,8 +2,6 @@
 
 LIS和LCS在模型上存在很多相近之处。
 
-# 基本模型
-
 ## 动态规划方法
 
 求两个序列X和Y的最长公共子序列（可以不连续）。
@@ -331,6 +329,61 @@ aaaa n
 - [x] HDU 1503 Advanced Fruits
 
 对于两个字符串`s1`和`s2`，找出包含`s1`和`s2`所有字符并且各自保持顺序的最短序列。
+
+
+
+## 要求子序列连续的LCS
+
+上面我们求的LCS都是允许子序列不连续，现在如果要求子序列必须连续。
+
+- [x] 718.Maximum Length of Repeated Subarray
+
+Given two integer arrays `A` and `B`, return the maximum length of an subarray that appears in both arrays.
+
+**Example 1:**
+
+```
+Input:
+A: [1,2,3,2,1]
+B: [3,2,1,4,7]
+Output: 3
+Explanation: 
+The repeated subarray with maximum length is [3, 2, 1].
+```
+
+**Note:**
+
+1. 1 <= len(A), len(B) <= 1000
+2. 0 <= A[i], B[i] < 100
+
+```c++
+class Solution {
+public:
+    int findLength(vector<int>& A, vector<int>& B) {
+        std::ios_base::sync_with_stdio(false);
+		cin.tie(NULL);
+		cout.tie(NULL);
+
+        int m = A.size(), n = B.size();
+        vector<vector<int>> d(m + 1, vector<int>(n + 1, 0));
+        int res = 0;
+        for (int i = 1; i <= m; ++i) {
+            for (int j = 1; j <= n; ++j) {
+                d[i][j] = (A[i - 1] == B[j - 1]) ? d[i - 1][j - 1] + 1 : 0;
+                res = max(res, d[i][j]);
+            }
+        }
+
+        return res;
+    }
+};
+```
+
+
+
+
+
+
 
 
 
