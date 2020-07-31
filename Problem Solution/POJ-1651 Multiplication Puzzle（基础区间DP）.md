@@ -7,7 +7,7 @@ The multiplication puzzle is played with a row of cards, each containing a singl
 The goal is to take cards in such order as to minimize the total number of scored points.
 
 For example, if cards in the row contain numbers 10 1 50 20 5, player might take a card with 1, then 20 and 50, scoring
-10*1*50 + 50*20*5 + 10*50*5 = 500+5000+2500 = 8000
+`10*1*50 + 50*20*5 + 10*50*5 = 500+5000+2500 = 8000`
 If he would take the cards in the opposite order, i.e. 50, then 20, then 1, the score would be
 1*50*20 + 1*20*5 + 10*1*5 = 1000+100+50 = 1150.
 

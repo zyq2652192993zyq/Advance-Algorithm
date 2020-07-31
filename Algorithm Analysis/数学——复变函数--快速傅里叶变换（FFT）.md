@@ -5,6 +5,7 @@
 * [十分简明易懂的FFT（快速傅里叶变换）](https://blog.csdn.net/enjoy_pascal/article/details/81478582)
 * [浅谈FFT、NTT和MTT](https://www.cnblogs.com/Paulliant/p/10254037.html)
 * [从多项式乘法到快速傅里叶变换](http://blog.miskcoo.com/2015/04/polynomial-multiplication-and-fast-fourier-transform)
+* https://www.bilibili.com/video/BV1Wb411v7yN
 * 《信息学奥赛数学一本通》7.5 快速傅里叶变换
 
 典型题目：

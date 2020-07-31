@@ -1,10 +1,11 @@
 > # 树——线段树(Segment Tree)
 
-题单：
+参考资料：
 
 * <https://vjudge.net/article/467>
 * <https://vjudge.net/article/1385>
 * <https://www.cnblogs.com/flashhu/p/9651161.html>
+* https://www.bilibili.com/video/BV1Ct411H76z/?spm_id_from=333.788.videocard.1
 
 ## 线段树的背景
 
@@ -447,7 +448,7 @@ zkw（张琨玮） 线段树
 
 ### 权值线段树
 
-权值线段树维护**数的个数，**数组下标代表**整个值域**（如果值域太大，可以**离散化**）
+权值线段树是主席树的前置技能。权值线段树维护**数的个数，**数组下标代表**整个值域**（如果值域太大，可以**离散化**）
 
 权值线段树可以解决的问题：
 
@@ -464,6 +465,8 @@ zkw（张琨玮） 线段树
 * 如果f<k递归进入右子树寻找第f-k大
 
 参考资料：https://www.luogu.com.cn/training/1010
+
+https://blog.csdn.net/Code92007/article/details/86761820
 
 P2574 XOR的艺术
 P2894 [USACO08FEB]酒店Hotel
@@ -549,6 +552,12 @@ P3431 [POI2005]AUT-The Bus
 
 
 ## 线段树优化动态规划
+
+
+
+
+
+
 
 
 
