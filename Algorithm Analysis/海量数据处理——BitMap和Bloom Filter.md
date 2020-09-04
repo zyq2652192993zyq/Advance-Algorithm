@@ -4,8 +4,11 @@
 
 * [Bloom Filter概念和原理](https://blog.csdn.net/jiaomeng/article/details/1495500)
 * [使用BloomFilter布隆过滤器解决缓存击穿、垃圾邮件识别、集合判重](https://blog.csdn.net/tianyaleixiaowu/article/details/74721877?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param)
-
 * [布隆过滤器(BloomFilter)原理 实现和性能测试](https://blog.csdn.net/xindoo/article/details/103183445)
+* https://github.com/xunilrj/BloomFilters（包含关于Bloom Filter的论文）
+* https://blog.csdn.net/dannypolyu/article/details/9319811 （实现了经典的12中哈希函数）
+* [Murmurhash 哈希算法 介绍与实现](https://blog.csdn.net/qigaohua/article/details/102839111)
+* [BloomFilter.NetCore](https://github.com/vla/BloomFilter.NetCore)
 * 《编程之法：面试和算法心得》
 
 ## 基本概念
@@ -74,6 +77,47 @@ Bloom Filter是一种空间效率很高的随机数据结构，它利用位数�
 ### 错误率估计
 
 假设现在有集合$S=\{x_1, x_2, x_3 \cdots ,x_n\}$，集合里面有`n`个元素，设有`k`个散列函数，位图的长度为`m`，为了简化模型，设$kn < m$。
+
+任意一个位置被设置成1的概率是$\frac{1}{m}$，是0的概率为$1 - \frac{1}{m}$，如果对于集合$S$中的`n`个元素处理完后某个位置是0的概率为
+$$
+p^{\prime}=\left(1-\frac{1}{m}\right)^{k n} \approx e^{-k n / m}
+$$
+简化运算，令$p = e^{-k n / m}$，设$\rho$为位数组中0的比率，则$E(\rho) = p^{\prime}$，出现误判就是连续`k`次都恰好命中为1的位置，则误判率（false positive rate）为：
+$$
+(1-\rho)^{k} \approx\left(1-p^{\prime}\right)^{k} \approx(1-p)^{k}
+$$
+
+$$
+\begin{array}{c}
+f^{\prime}=\left(1-p^{\prime}\right)^{k}=\left(1-\left(1-\frac{1}{m}\right)^{k n}\right)^{k} \\
+f=(1-p)^{k}=\left(1-e^{-k n / m}\right)^{k}
+\end{array}
+$$
+
+### 最优散列函数的个数
+
+散列函数越多，对于一个不属于集合的元素，得到0的概率大，如果函数较少，位数组中的0就越多。
+
+令$g = k \ln {1 - \exp^{-kn / m}}$，则`g`取到最小，`f`也会取到最小。因为$p = e^{-k n / m}$，所以：
+$$
+g=-\frac{m}{n} \ln (p) \ln (1-p)
+$$
+取到极值时$\ln{p} = \ln{1-p}$，则$p = 1/2$时取到极小值，意味着位数组里面0所占的比例是50%。进而可以推导出最优散列函数的个数为：
+$$
+k = \ln{2} \times \frac{m}{n}
+$$
+需要的位数是
+$$
+m = n \times \log_2{e} \times \log_2{1/p} = 1.44n \times \log_2{1/p}
+$$
+
+### 实现
+
+在进行程序实现时，我们需要用户提供数组元素的个数`n`和接受的误判率，先去计算出需要开多大的位数组，然后算出需要的哈希函数的个数。在哈希函数部分可以选择使用超级哈希算法`Murmurhash`，可以避免自己来构造`k`个哈希函数，另外还可以参考在`Redis`里又额外使用了一个哈希函数来实现字典。
+
+对于哈希算法的解释：https://stackoverflow.com/questions/1057036/please-explain-murmur-hash，实现方面可以参考BloomFilter.NetCore部分。
+
+
 
 
 
