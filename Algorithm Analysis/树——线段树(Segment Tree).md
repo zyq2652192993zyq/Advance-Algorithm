@@ -255,10 +255,10 @@ int n = 100005; //叶节点的个数
 vector<Node> tree(n * 4);
 vector<int> seq(n);
 
-#define left(x) tree[x].left
+#define left(x)  tree[x].left
 #define right(x) tree[x].right
-#define sum(x) tree[x].sum
-#define lazy(x) tree[x].lazy 
+#define sum(x)   tree[x].sum
+#define lazy(x)  tree[x].lazy
 
 inline int leftChild(int x) { return x << 1; } //根节点的左子节点的下标
 inline int rightChild(int x) { return x << 1 | 1; } //根节点的右子节点的下标
@@ -298,10 +298,10 @@ void pushDown(int root)
 }
 
 //单点修改
-void change(int root, int pos, int value)
+void change(int root, int pos, int val)
 {
 	//如果当前节点就是叶节点，直接修改，停止下滤
-	if (left(root) == right(root)) { sum(root) = value; return; }
+	if (left(root) == right(root)) { sum(root) = val; return; }
 
 	int mid = left(root) + ((right(root) - left(root)) >> 1);
 
