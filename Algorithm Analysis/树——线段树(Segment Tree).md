@@ -6,6 +6,7 @@
 * <https://vjudge.net/article/1385>
 * <https://www.cnblogs.com/flashhu/p/9651161.html>
 * https://www.bilibili.com/video/BV1Ct411H76z/?spm_id_from=333.788.videocard.1
+* [noip线段树与树状数组](https://www.bilibili.com/video/BV1Tk4y1m7VM/?spm_id_from=333.788.videocard.5) 较为全面
 
 ## 线段树的背景
 
