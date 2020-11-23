@@ -276,6 +276,85 @@ int main()
 
 ## 逆序对问题
 
+- [x] 洛谷-P1908 逆序对
+
+
+
+```c++
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int MAXN = 5e5 + 5;
+int n, len;
+vector<int> seq(MAXN), help(MAXN), tree(MAXN);
+
+int getID(int target)
+{
+	return lower_bound(help.begin(), help.begin() + len, target) - help.begin() + 1;
+}
+
+
+void discrete()
+{
+	sort(help.begin(), help.begin() + n);
+	len = unique(help.begin(), help.begin() + n) - help.begin();
+}
+
+inline int lowbit(int x) { return x & (-x); }
+
+void add(int pos, int val)
+{
+	while (pos <= len) {
+		tree[pos] += val;
+		pos += lowbit(pos);
+	}
+}
+
+long long query(int pos)
+{
+	long long res = 0;
+	while (pos) {
+		res += tree[pos];
+		pos -= lowbit(pos);
+	}
+
+	return res;
+}
+
+long long inversionPairNum()
+{
+	long long res = 0;
+	for (int i = n - 1; i >= 0; --i) {
+		int id = getID(seq[i]);
+		res += query(id - 1);
+		add(id, 1); 
+	}
+
+	return res;
+}
+
+
+int main()
+{
+	std::ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	cin >> n;
+	for (int i = 0; i < n; ++i) {
+		cin >> seq[i];
+		help[i] = seq[i];
+	}
+
+	discrete();
+
+	cout << inversionPairNum() << endl;
+
+	return 0;
+}
+```
+
 
 
 
