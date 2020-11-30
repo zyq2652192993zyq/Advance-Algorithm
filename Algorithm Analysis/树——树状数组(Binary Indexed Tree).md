@@ -277,6 +277,8 @@ int main()
 ## 逆序对问题
 
 - [x] 洛谷-P1908 逆序对
+- [x] LeetCode 493.Reverse Pairs
+- [x] 牛客-1032A 楼兰图腾（逆序对变形）
 
 
 
