@@ -1,3 +1,2 @@
-> # 基础算法——SVM
+> # Supervised Learning——SVM
 
-二分类问题
