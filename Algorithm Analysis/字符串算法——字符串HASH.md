@@ -103,7 +103,7 @@ H(S + T) = (H(S) * p^(length(T)) + H(T)) % M
 ```c++
 typedef unsigned long long ull;
 
-ull hash[N], p[N];
+ull h[N], p[N];
 ull P = 13331;
 
 void calculate(const string & s)
@@ -151,7 +151,7 @@ inline ull get(int left, int right)
 
 构造数据让哈希算法失效通常不作为一种方法，一般书中都是在冲突的处理部分举几个例子让我们理解哈希可能产生冲突的情况。让哈希失效其实是一种从反面去理解哈希的途径，做题的过程中，我们通常不需要自己构造数据，只需要写出正确的算法，但是在BZOJ的3097，3098，3099这三道题，告诉我们没有一种万能的哈希方法，需要具体问题具体分析。
 
-- [ ] BZOJ 3097（参考了https://www.mina.moe/archives/2391）
+- [ ] BZOJ 3097（参考了https://www.mina.moe000/archives/2391）
 - [ ] BZOJ 3098（参考了http://hzwer.com/1861.html）
 - [ ] BZOJ 3099 （参考了http://qianxingjian.lofter.com/post/1eb4703f_f978e51）
 
