@@ -572,7 +572,7 @@ P3431 [POI2005]AUT-The Bus
 
 解决动态区间第K大问题。
 
-- [ ] ZOJ 2112 Dynamic Rankings
+- [x] ZOJ 2112 Dynamic Rankings
 
 
 
