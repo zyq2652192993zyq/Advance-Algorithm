@@ -5,6 +5,8 @@
 * 《统计学习》李航
 * 《机器学习实战》
 
+## KNN基础
+
 KNN（K近邻算法），存在一个样本数据集合（训练样本集），并且样本集都是有标签的，输入没有标签的数据，将数据的每个特征与样本集中数据对应的特征进行比较，最后选择样本集中前`k`个最相似的数据，统计`k`个数据中出现次数最多的分类，最为新数据的分类。参数`k`是超参数，一般是不大于20的整数。
 
 ```python
@@ -37,7 +39,23 @@ def KNN(inputData, trainData, label, k):
 
 [python优先级队列](https://geek-docs.com/python/python-examples/python-priority-queue.html)
 
-## K-Decision Tree
+
+
+## 优化算法
+
+### 距离加权
+
+https://blog.csdn.net/weixin_41770169/article/details/81560946
+
+### K-Decision Tree
 
 KNN的优化版本。
+
+### BallTree
+
+https://blog.csdn.net/weixin_41770169/article/details/81634307
+
+### LSH
+
+https://blog.csdn.net/weixin_41770169/article/details/81634943
 
