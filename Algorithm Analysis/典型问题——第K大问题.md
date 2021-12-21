@@ -34,6 +34,14 @@
 
 
 
+### BFPRT算法
+
+[BFPRT——Top k问题的终极解法](https://zhuanlan.zhihu.com/p/291206708)
+
+
+
+
+
 ### 堆排序
 
 把数据放入优先级队列中，取出K个数即可。时间复杂度$O(k \log n)$。

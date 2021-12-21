@@ -525,11 +525,87 @@ P3206 [HNOI2010] 城市建设（线段树分治与 LCT 维护动态 MST 结合�
 
 ## 扫描线算法
 
-参考资料：https://www.bilibili.com/video/BV144411Z7tx
+参考资料：
 
-https://www.luogu.com.cn/training/1010
+* https://www.bilibili.com/video/BV144411Z7tx
+
+* https://www.luogu.com.cn/training/1010
+* https://www.bilibili.com/video/BV1Po4y1Z7sm?from=search&seid=4237805124879648201&spm_id_from=333.337.0.0
+
+
+
+### Number of Airplanes in the Sky
+
+给出每个飞机的起落时间，如果同一时刻有飞机降落，也有飞机起飞，则先降落再起飞。
+
+如果碰到飞机起飞，则飞机数+1，否则减1。
+
+```c++
+/**
+ * Definition of Interval:
+ * classs Interval {
+ *     int start, end;
+ *     Interval(int start, int end) {
+ *         this->start = start;
+ *         this->end = end;
+ *     }
+ * }
+ */
+
+class Solution {
+	struct Node
+	{
+		int pos;
+		int flag;
+
+		Node(int p, int f): pos(p), flag(f) {}
+
+		bool operator<(const Node & obj) const {
+			return pos < obj.pos || (pos == obj.pos && flag > obj.flag);
+		}
+	};
+public:
+    /**
+     * @param airplanes: An interval array
+     * @return: Count of airplanes are in the sky.
+     */
+    int countOfAirplanes(vector<Interval> &airplanes) {
+        std::ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+        cout.tie(NULL);
+
+        vector<Node> store;
+        for (auto & e : airplanes) {
+        	store.push_back(Node(e.start, -1));
+        	store.push_back(Node(e.end, 1));
+        }
+
+        sort(store.begin(), store.end());
+
+        int res = 0;
+        int tmp = 0;
+        for (auto & e : store) {
+        	if (e.flag < 0) ++tmp;
+        	else --tmp;
+        	res = max(res, tmp);
+        }
+
+        return res;
+    }
+};
+```
+
+
+
+
+
+
+
+
 
 最典型的题目
+
+- [x] LintCode 391.Number of Airplanes in the Sky (也可以用区间贪心中的区间选点来解决)
 
 - [ ] P1904 天际线
 - [ ] P5490 【模板】扫描线（矩形覆盖问题）

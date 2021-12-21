@@ -10,6 +10,13 @@
 
 Logistic Regression主要用于处理二分类问题（还有线性判别分析），Softmax Regression是逻辑回归的推广，主要用于处理多分类问题（比如手写数字识别）。
 
+不能直接使用输出层的原因：
+
+* 输出层的输出值的范围不确定，难以只管判断输出的意义。
+* 真实标签是离散值，离散值与不确定范围的输出值之间的误差难以衡量。
+
+常用的解决方案是对输出结果取对数，这样输出的总和是1，每个输出在`[0, 1]`区间内。
+
 假设有`k`类，`m`个样本点，每个样本`n`个特征，那么权重矩阵的形状为$n \times k$，将偏置项合并到权重矩阵里，则可以计算对于第`i`个样本，属于某个类别的概率为：
 $$
 h_{\theta}\left(X^{(i)}\right)=\left[\begin{array}{c}
@@ -29,24 +36,32 @@ $$
 P\left(y^{(i)}=j \mid X^{(i)} ; \theta\right)=\frac{e^{\theta_{j}^{T} X^{(i)}}}{\sum_{l=1}^{k} e^{\theta_{l}^{T} X^{(i)}}}
 $$
 
+## 交叉熵损失函数
+
+对于类别的判定，只要模型得到属于这个类别的概率大于判定是其他类别的概率，那么就可以认为模型的预测是准确的。如果使用平方损失函数，会过于严格。
+
+定义交叉熵：
+$$
+H(y^{(i)}, \hat{y}^{(i)}) = -\sum_{j = 1} ^ m y_j^{(i)} \times \log{\hat{y}^{(i)}}
+$$
 损失函数的定义则是通过极大似然法求得,利用梯度下降（梯度提升求最大值，加了符号相当于求最小值）求更新公式：
 $$
 J(\theta)=-\frac{1}{m}\left[\sum_{i=1}^{m} \sum_{j=1}^{k} I\left\{y^{(i)}=j\right\} \log \frac{e^{\theta_{j}^{T} X^{(i)}}}{\sum_{l=1}^{k} e^{\theta_{l}^{T} X^{(i)}}}\right]
 $$
 
 $$
-L(\theta)=-\frac{1}{m}\left[\sum_{i=1}^{m} \sum_{j=1}^{k} 1\left\{y^{(i)}=j\right\} \log \frac{e^{\theta_{j}^{T} x_{i}}}{\sum_{l=1}^{k} e^{\theta_{l}^{T} x_{i}}}\right]
+L(\theta)=-\frac{1}{m}\left[\sum_{i=1}^{m} \sum_{j=1}^{k} I\left\{y^{(i)}=j\right\} \log \frac{e^{\theta_{j}^{T} x_{i}}}{\sum_{l=1}^{k} e^{\theta_{l}^{T} x_{i}}}\right]
 $$
 
 $$
 \begin{aligned}
-\frac{\partial L(\theta)}{\partial \theta_{j}} &=-\frac{1}{m} \frac{\partial}{\partial \theta_{j}}\left[\sum_{i=1}^{m} \sum_{j=1}^{k} 1\left\{y^{(i)} = j\right\} \log \frac{e^{\theta_{j}^{T} x_{i}}}{\sum_{l=1}^{k} e^{\theta_{l}^{T} x_{i}}}\right] \\
-&=-\frac{1}{m} \frac{\partial}{\partial \theta_{j}}\left[\sum_{i=1}^{m} \sum_{j=1}^{k} 1\left\{y^{(i)}=j\right\}\left(\theta_{j}^{T} x_{i}-\log \sum_{l=1}^{k} e^{\theta_{l}^{T} x_{i}}\right)\right] \\
-&=-\frac{1}{m}\left[\sum_{i=1}^{m} 1\left\{y^{(i)}=j\right\}\left(x_{i}-\sum_{j=1}^{k} \frac{e^{\theta_{j}^{T} x_{i}} \cdot x_{i}}{\sum_{l=1}^{k} e^{\theta_{l}^{T} x_{i}}}\right)\right] \\
-&=-\frac{1}{m}\left[\sum_{i=1}^{m} x_{i} 1\left\{y^{(i)}=j\right\}\left(1-\sum_{j=1}^{k} \frac{e^{\theta_{j}^{T} x_{i}}}{\sum_{l=1}^{k} e^{\theta_{l}^{T} x_{i}}}\right)\right] \\
-&=-\frac{1}{m}\left[\sum_{i=1}^{m} x_{i}\left(1\left\{y^{(i)}=j\right\}-\sum_{j=1}^{k} 1\left\{y_{i}=j\right\} \frac{e^{\theta_{j}^{T} x_{i}}}{\sum_{l=1}^{k} e^{\theta_{l}^{T} x_{i}}}\right)\right] \\
-&=-\frac{1}{m}\left[\sum_{i=1}^{m} x_{i}\left(1\left\{y^{(i)}=j\right\}-\frac{e^{\theta_{j}^{T} x_{i}}}{\sum_{l=1}^{k} e^{\theta_{l} x_{i}}}\right)\right] \\
-&=-\frac{1}{m}\left[\sum_{i=1}^{m} x_{i}\left(1\left\{y^{(i)}=j\right\}-p\left(y_{i}=j \mid x_{i} ; \theta\right)\right)\right]
+\frac{\partial L(\theta)}{\partial \theta_{j}} &=-\frac{1}{m} \frac{\partial}{\partial \theta_{j}}\left[\sum_{i=1}^{m} \sum_{j=1}^{k} I\left\{y^{(i)} = j\right\} \log \frac{e^{\theta_{j}^{T} x_{i}}}{\sum_{l=1}^{k} e^{\theta_{l}^{T} x_{i}}}\right] \\
+&=-\frac{1}{m} \frac{\partial}{\partial \theta_{j}}\left[\sum_{i=1}^{m} \sum_{j=1}^{k} I\left\{y^{(i)}=j\right\}\left(\theta_{j}^{T} x_{i}-\log \sum_{l=1}^{k} e^{\theta_{l}^{T} x_{i}}\right)\right] \\
+&=-\frac{1}{m}\left[\sum_{i=1}^{m} I\left\{y^{(i)}=j\right\}\left(x_{i}-\sum_{j=1}^{k} \frac{e^{\theta_{j}^{T} x_{i}} \cdot x_{i}}{\sum_{l=1}^{k} e^{\theta_{l}^{T} x_{i}}}\right)\right] \\
+&=-\frac{1}{m}\left[\sum_{i=1}^{m} x_{i} I\left\{y^{(i)}=j\right\}\left(1-\sum_{j=1}^{k} \frac{e^{\theta_{j}^{T} x_{i}}}{\sum_{l=1}^{k} e^{\theta_{l}^{T} x_{i}}}\right)\right] \\
+&=-\frac{1}{m}\left[\sum_{i=1}^{m} x_{i}\left(1\left\{y^{(i)}=j\right\}-\sum_{j=1}^{k} I\left\{y_{i}=j\right\} \frac{e^{\theta_{j}^{T} x_{i}}}{\sum_{l=1}^{k} e^{\theta_{l}^{T} x_{i}}}\right)\right] \\
+&=-\frac{1}{m}\left[\sum_{i=1}^{m} x_{i}\left(I\left\{y^{(i)}=j\right\}-\frac{e^{\theta_{j}^{T} x_{i}}}{\sum_{l=1}^{k} e^{\theta_{l} x_{i}}}\right)\right] \\
+&=-\frac{1}{m}\left[\sum_{i=1}^{m} x_{i}\left(I\left\{y^{(i)}=j\right\}-p\left(y_{i}=j \mid x_{i} ; \theta\right)\right)\right]
 \end{aligned}
 $$
 
@@ -55,7 +70,13 @@ $$
 \theta_j = \theta_j + \alpha \nabla_{\theta_j} J(\theta)
 $$
 
+## 模型预测与评价
+
+使用准确率accuracy来评价模型的表现。
+
 ## 代码实现
+
+### 不借助框架的实现
 
 ```python
 # coding:UTF-8
@@ -125,4 +146,53 @@ def main():
 if __name__ == '__main__':
 	main()
 ```
+
+
+
+### Tensorflow 2.0实现
+
+```python
+import tensorflow as tf
+from tensorflow import keras
+
+fashion_mnist = keras.datasets.fashion_mnist
+(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
+
+x_train = x_train / 255.0
+x_test = x_test / 255.0
+
+model = keras.Sequential([
+    keras.layers.Flatten(input_shape=(28, 28)),
+    keras.layers.Dense(10, activation=tf.nn.softmax)
+])
+
+model.compile(
+    optimizer=tf.keras.optimizers.SGD(0.1),
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+model.fit(x_train, y_train, epochs=5, batch_size=256)
+
+test_loss, test_acc = model.evaluate(x_test, y_test)
+print('Test Acc:', test_acc)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

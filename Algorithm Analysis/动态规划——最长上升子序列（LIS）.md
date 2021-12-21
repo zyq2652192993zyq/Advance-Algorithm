@@ -242,6 +242,89 @@ int main()
 }
 ```
 
+### 最长递增子序列的个数
+
+- [x] LeetCode 673.Number of Longest Increasing Subsequence
+
+Given an integer array `nums`, return *the number of longest increasing subsequences.*
+
+**Notice** that the sequence has to be **strictly** increasing.
+
+**Example 1:**
+
+```
+Input: nums = [1,3,5,4,7]
+Output: 2
+Explanation: The two longest increasing subsequences are [1, 3, 4, 7] and [1, 3, 5, 7].
+```
+
+**Example 2:**
+
+```
+Input: nums = [2,2,2,2,2]
+Output: 5
+Explanation: The length of longest continuous increasing subsequence is 1, and there are 5 subsequences' length is 1, so output 5.
+```
+
+**Constraints:**
+
+- `1 <= nums.length <= 2000`
+- `-106 <= nums[i] <= 106`
+
+---
+
+解法一：动态规划$O(n^2)$
+
+`d[i]`表示以`nums[i]`为结尾的最长上升子序列的长度，`f[i]`表示以`nums[i]`为结尾的最长上升子序列的个数，这样最后只需要将所有`d[i] == maxLength`的值相加即可。
+
+```c++
+class Solution {
+public:
+    int findNumberOfLIS(vector<int>& nums) {
+        std::ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+        cout.tie(NULL);
+
+        int n = nums.size();
+        vector<int> d(n, 0), f(n, 0);
+        d[0] = 1, f[0] = 1;
+        for (int j = 1; j < n; ++j) {
+            int maxLength = 0;
+            for (int i = 0; i < j; ++i) {
+                if (nums[i] < nums[j] && maxLength < d[i]) {
+                    maxLength = d[i];
+                }
+            }
+            d[j] = maxLength + 1;
+
+            for (int i = 0; i < j; ++i) {
+                if (nums[i] < nums[j] && d[i] == d[j] - 1) f[j] += f[i];
+            }
+            if (f[j] == 0) f[j] += 1;
+        }
+        int maxLength = *max_element(d.begin(), d.end());
+        int res = 0;
+        for (int i = 0; i < n; ++i) {
+            if (d[i] == maxLength) {
+                res += f[i];
+            }
+        }
+
+        return res;
+    }
+};
+```
+
+解法二：贪心+前缀和+二分查找$O(n\log{n})$
+
+​			
+
+
+
+
+
+
+
 ## 合并LIS（JLIS）
 
 - [ ] ALGOSPOT JLIS（《算法问题实战策略》8.5）

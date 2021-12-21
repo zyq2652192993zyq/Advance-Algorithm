@@ -91,11 +91,27 @@ $$
 
 所以为了让似然函数取到最小值，则应该让$\sum_{\mathrm{i}=1}^{\mathrm{m}}\left(\mathrm{y}^{(\mathrm{i})}-\theta^{\mathrm{T}} \mathrm{x}^{(\mathrm{i})}\right)^{2}$取到最小值，这就是损失函数的定义。
 
+当模型和损失函数形式较为简单时，上面的误差最小化问题的解可以直接用公式表达出来。这类解叫作解析解（analytical solution）。本节使用的线性回归和平方误差刚好属于这个范畴。然而，大多数深度学习模型并没有解析解，只能通过优化算法有限次迭代模型参数来尽可能降低损失函数的值。这类解叫作数值解（numerical solution）。
+
+在求数值解的优化算法中，小批量随机梯度下降（mini-batch stochastic gradient descent）在深度学习中被广泛使用。它的算法很简单：先选取一组模型参数的初始值，如随机选取；接下来对参数进行多次迭代，使每次迭代都可能降低损失函数的值。在每次迭代中，先随机均匀采样一个由固定数目训练数据样本所组成的小批量（mini-batch）\mathcal{B}B，然后求小批量中数据样本的平均损失有关模型参数的导数（梯度），最后用此结果与预先设定的一个正数的乘积作为模型参数在本次迭代的减小量。
+$$
+\begin{aligned}
+w_{1} & \leftarrow w_{1}-\frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{\partial \ell^{(i)}\left(w_{1}, w_{2}, b\right)}{\partial w_{1}}=w_{1}-\frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} x_{1}^{(i)}\left(x_{1}^{(i)} w_{1}+x_{2}^{(i)} w_{2}+b-y^{(i)}\right) \\
+w_{2} & \leftarrow w_{2}-\frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{\partial \ell^{(i)}\left(w_{1}, w_{2}, b\right)}{\partial w_{2}}=w_{2}-\frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} x_{2}^{(i)}\left(x_{1}^{(i)} w_{1}+x_{2}^{(i)} w_{2}+b-y^{(i)}\right) \\
+b & \leftarrow b-\frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{\partial \ell^{(i)}\left(w_{1}, w_{2}, b\right)}{\partial b}=b-\frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}\left(x_{1}^{(i)} w_{1}+x_{2}^{(i)} w_{2}+b-y^{(i)}\right)
+\end{aligned}
+$$
+其中$|\mathcal{B}|$是`batch size`，$\eta$是学习率（`learning rate`）。
+
 ## Generalized linear regression
 
 广义线性回归，对于对数线性回归，有$\ln{y} = \textbf{w}^T\textbf{x} + b$，更一般的，考虑单调可微函数$g(\cdot)$ $$ y = g^{-1}(\textbf{w}^T\textbf{x} + b) $$ 这样得到的模型称为“广义线性模型”（generalized linear model），其中函数$g(\cdot)$称为“联系函数”
 
 ## 程序实现
+
+### 不借助框架的实现
+
+具体的数据在`src`目录下。
 
 ```python
 import pandas as pd
@@ -109,6 +125,7 @@ def Least_Square(feature, label):
         return
 	return (feature.T * feature).I * feature.T * label
 
+
 if __name__ == "__main__":
 	df = pd.read_csv("./data.txt", header = None, sep = '\t')
 	feature = df.iloc[:, :-1].copy()
@@ -121,6 +138,261 @@ if __name__ == "__main__":
 	res = pd.DataFrame(Least_Square(feature, label))
 	res.to_csv("result.txt", header = None, index = None)
 ```
+
+### 借助TensorFlow的基础实现
+
+```python
+# %matplotlib inline
+import tensorflow as tf
+print(tf.__version__)
+from matplotlib import pyplot as plt
+import random
+
+# generate data
+feature_num = 2
+sample_num = 1000
+true_w = tf.constant([2.0, -3.4])
+true_w = tf.reshape(true_w, (2, 1))
+true_b = tf.constant([4.2])
+features = tf.random.normal((sample_num, feature_num), stddev=1)
+labels = tf.matmul(features, true_w) + true_b + tf.random.normal((sample_num, 1), stddev=0.01)
+
+# read data
+def data_iter(batch_size, features, labels):
+    num_examples = len(features)
+    indices = list(range(num_examples))
+    random.shuffle(indices)
+    for i in range(0, num_examples, batch_size):
+        j = indices[i: min(i+batch_size, num_examples)]
+        yield tf.gather(features, axis=0, indices=j), tf.gather(labels, axis=0, indices=j)
+
+# initialize parameters        
+batch_size = 10
+predict_w = tf.Variable(tf.random.normal((feature_num, 1), stddev=0.01))
+predict_b = tf.Variable(tf.zeros((1,)))
+
+# define model
+def linreg(X, w, b):
+    return tf.matmul(X, w) + b
+
+# define loss function
+def squared_loss(y_hat, y):
+    return (y_hat - tf.reshape(y, y_hat.shape)) ** 2 / 2
+
+# define optimizer
+def sgd(params, lr, batch_size, grads):
+    """Mini-batch stochastic gradient descent."""
+    for i, param in enumerate(params):
+#         print(grads[0])
+        param.assign_sub(lr * grads[i] / batch_size)
+
+# train model
+lr = 0.03
+num_epochs = 3
+net = linreg
+loss = squared_loss
+
+for epoch in range(num_epochs):
+    for X, y in data_iter(batch_size, features, labels):
+        with tf.GradientTape() as t:
+            t.watch([predict_w, predict_b])
+            l = tf.reduce_sum(loss(net(X, predict_w, predict_b), y))
+        grads = t.gradient(l, [predict_w, predict_b])
+        sgd([predict_w, predict_b], lr, batch_size, grads)
+    train_l = loss(net(features, predict_w, predict_b), labels)
+    print('epoch %d, loss %f' % (epoch + 1, tf.reduce_mean(train_l)))
+
+    
+# validation
+print(predict_w, true_w)
+print(predict_b, true_b)
+```
+
+
+
+### 借助TensorFlow的简洁实现
+
+```python
+import tensorflow as tf
+from tensorflow import data
+from tensorflow import keras
+from tensorflow import losses
+from tensorflow.keras import optimizers
+from tensorflow.keras import layers
+from tensorflow import initializers as init
+
+config = {
+    "feature_num": 2,
+    "sample_num": 1000,
+    "batch_size": 10,
+    "num_epochs": 3
+}
+
+
+def get_dataset():
+    true_w = tf.reshape(tf.constant([2.0, -3.4]), (2, 1))
+    true_b = tf.constant([4.2])
+    features = tf.random.normal((config['sample_num'], config['feature_num']), stddev=1)
+    labels = tf.matmul(features, true_w) + true_b + tf.random.normal((config['sample_num'], 1), stddev=0.01)
+    dataset = data.Dataset.from_tensor_slices((features, labels)) \
+        .shuffle(buffer_size=config['sample_num']).batch(config['batch_size'])
+
+    return dataset, features, labels, true_w, true_b
+
+
+def get_model():
+    model = keras.Sequential(
+        layers.Dense(1, kernel_initializer=init.RandomNormal(stddev=0.01))
+    )
+    return model
+
+
+def get_loss():
+    return losses.MeanSquaredError()
+
+
+def get_optimizer():
+    return optimizers.SGD(learning_rate=0.03)
+
+
+def train(dataset, features, labels, model, optimizer, loss):
+    for epoch in range(1, config['num_epochs'] + 1):
+        for (batch, (X, y)) in enumerate(dataset):
+            with tf.GradientTape() as tape:
+                l = loss(model(X, training=True), y)
+
+            grads = tape.gradient(l, model.trainable_variables)
+            optimizer.apply_gradients(zip(grads, model.trainable_variables))
+        l = loss(model(features), labels)
+        print(f'epoch {epoch}, loss: {l}')
+
+
+def main():
+    dataset, features, labels, true_w, true_b = get_dataset()
+    model = get_model()
+    train(
+        dataset=dataset,
+        features=features,
+        labels=labels,
+        model=model,
+        optimizer=get_optimizer(),
+        loss=get_loss()
+    )
+
+    print(true_w, model.get_weights()[0])
+    print(true_b, model.get_weights()[1])
+
+
+if __name__ == '__main__':
+    main()
+```
+
+### Pytorch实现
+
+```python
+import torch
+import numpy as np
+import torch.utils.data as Data
+from torch import nn, optim
+from torch.nn import init
+
+
+class LinearNet(nn.Module):
+    def __init__(self, num_inputs):
+        super(LinearNet, self).__init__()
+        self.linear = nn.Linear(num_inputs, 1)
+
+    def forward(self, x):
+        y = self.linear(x)
+        return y
+
+
+def main():
+    # y = x_1 * w_1 + x_2 * w_2 + b
+    num_inputs = 2
+    num_examples = 1000
+    true_w = [2, -3.4]
+    true_b = 4.2
+    features = torch.tensor(
+        np.random.normal(0, 1, (num_examples, num_inputs)),
+        dtype=torch.float
+    )
+    labels = true_w[0] * features[:, 0] + true_w[1] * features[:, 1] + true_b + torch.tensor(
+        np.random.normal(0, 0.01, size=(num_examples,)),
+        dtype=torch.float
+    )
+    print(labels.shape)
+
+    batch_size = 10
+    dataset = Data.TensorDataset(features, labels)
+    date_iter = Data.DataLoader(dataset, batch_size, shuffle=True)
+    for X, y in date_iter:
+        print(X, y)
+        print(X.shape)
+        print(y.shape)
+        break
+
+    # net = LinearNet(num_inputs)
+    net = nn.Sequential(
+        nn.Linear(num_inputs, 1)
+    )
+    print(net)
+    for param in net.parameters():
+        print(param)
+
+    # model parameters initialize
+    init.normal_(net[0].weight, mean=0, std=0.01)
+    init.constant_(net[0].bias, val=0)
+
+    loss = nn.MSELoss()
+
+    optimizer = optim.SGD(net.parameters(), lr=0.03)
+    print(optimizer)
+
+    num_epochs = 3
+    for epoch in range(num_epochs):
+        for X, y in date_iter:
+            output = net(X)
+            l = loss(output, y.view(-1, 1))
+            optimizer.zero_grad()
+            l.backward()
+            optimizer.step()
+        print(f'epoch {epoch + 1}, loss: {l.item()}')
+
+    dense = net[0]
+    print(true_w, dense.weight)
+    print(true_b, dense.bias)
+
+
+if __name__ == '__main__':
+    main()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
