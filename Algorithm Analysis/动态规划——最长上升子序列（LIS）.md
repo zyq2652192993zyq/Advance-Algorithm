@@ -469,7 +469,13 @@ int main()
 }
 ```
 
-# 拦截导弹（二分优化）
+## 杨氏矩阵解决LIS
+
+https://oi-wiki.org/math/young-tableau/
+
+# 经典练习
+
+## 拦截导弹（二分优化）
 
 - [x] 洛谷-P1020 导弹拦截（最典型的LIS练习，两种形式）
 
@@ -552,7 +558,7 @@ int main()
 }
 ```
 
-# 城市架桥
+## 城市架桥
 
 - [x] POJ 1631 Bridging signals（二进制优化后的LIS）或 HDU 1950 Bridging signals
 - [x] 一本通-1263：【例9.7】友好城市(和POJ 1631一样的方法)
@@ -647,7 +653,7 @@ int main()
 }
 ```
 
-# 合唱队形
+## 合唱队形
 
 - [x] 一本通-1264：【例9.8】合唱队形
 - [x] 一本通-1283：登山（背景不同，模型相同）
@@ -755,7 +761,7 @@ int main()
 
 
 
-典型题目： 
+# 典型题目
 
 - [x] 洛谷-P1020 导弹拦截（最典型的LIS练习，两种形式）
 - [x] LeetCode 300.Longest Increasing Subsequence

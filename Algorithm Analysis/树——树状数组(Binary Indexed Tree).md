@@ -246,7 +246,13 @@ int main()
 
 ## 单点修改，单点查询
 
-- [ ] loj 131
+- [ ] Li'breOJ 131
+
+
+
+
+
+
 
 
 
@@ -259,12 +265,19 @@ int main()
 ## 区间修改，区间查询
 
 - [ ] loj 132
+- [ ] POJ 3468 
 
 
 
 ### 二维形式
 
 - [ ] loj 135 
+
+
+
+## 区间修改，单点查询
+
+《算法竞赛进阶指南》 树状数组的扩展应用A tiny problem with intergers
 
 
 
@@ -378,7 +391,6 @@ POJ 2352
 POJ 2299
 
 <https://blog.csdn.net/u013480600/article/category/2094525>
-
 
 
 

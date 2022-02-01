@@ -8,6 +8,18 @@
 * [一本通提高篇 KMP算法](https://blog.csdn.net/dhdhdhx/article/details/103208555)
 * [LOJ 一本通提高篇2.2KMP算法 例题+练习（坑）](https://blog.csdn.net/seeker_LJYing/article/details/96422953)
 
+## 字符串压缩
+
+https://oi-wiki.org/string/kmp/
+
+- [x] Leetcode 686 Repeated String Match
+
+题目686就是下面问题的变形：
+
+给定一个长度为n的字符串s ，我们希望找到其最短的“压缩”表示，也即我们希望寻找一个最短的字符串t ，使得 s可以被 t的一份或多份拷贝的拼接表示。
+
+
+
 ## 经典KMP算法
 
 

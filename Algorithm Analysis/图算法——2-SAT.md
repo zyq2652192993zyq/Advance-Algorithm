@@ -89,3 +89,5 @@ struct TwoSAT
 - [ ] code forces the door problem
 - [ ] code forces Radio Stations
 
+- [ ] HDU 6370 Werewolf（dfs）
+- [x] LeetCode 2151 Maximum Good People Based on Statements (暴力DFS)
