@@ -51,7 +51,7 @@ inline int lowbit(int x)
 
 * 设数字`x >= 1`，则区间`c[x]`的左端点`L(x) = x - lowbit(x) + 1`。
 * 对于任意$x, y \geq 1$，如果$x \in [L(y), y]$，则称`y`覆盖`x`。
-* 数字`x`可以表示为$x = a \times 2^{i + 1} + 2^i, a \geq 0, i \geq 0$
+* 数字`x`可以表示为$x = a \times 2^{i + 1} + 2^i = a \times 2^{i + 1} + \text{lowbit}(x), a \geq 0, i \geq 0$
 
 **命题1：**对于树状数组的任意三个下标$1 \leq x \leq y \leq z$，若`y`覆盖`x`，`z`覆盖`y`，则`z`覆盖`x`，即覆盖性质具有传递性
 
@@ -391,6 +391,10 @@ POJ 2352
 POJ 2299
 
 <https://blog.csdn.net/u013480600/article/category/2094525>
+
+- [x] Leetcode 2179 Count Good Triplets in an Array
+
+
 
 
 
