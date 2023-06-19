@@ -302,7 +302,9 @@ void pushDown(int root)
 void change(int root, int pos, int val)
 {
 	//如果当前节点就是叶节点，直接修改，停止下滤
-	if (left(root) == right(root)) { sum(root) = val; return; }
+	if (left(root) == right(root)) { 
+		sum(root) = val; return; 
+	}
 
 	int mid = left(root) + ((right(root) - left(root)) >> 1);
 
@@ -524,6 +526,12 @@ P3206 [HNOI2010] 城市建设（线段树分治与 LCT 维护动态 MST 结合�
 
 
 ## 扫描线算法
+### 线段树染色问题
+
+https://www.jvruo.com/archives/429/
+POJ 2777
+
+----
 
 参考资料：
 
@@ -535,6 +543,7 @@ P3206 [HNOI2010] 城市建设（线段树分治与 LCT 维护动态 MST 结合�
 
 
 ### Number of Airplanes in the Sky
+此题属于贪心问题。
 
 给出每个飞机的起落时间，如果同一时刻有飞机降落，也有飞机起飞，则先降落再起飞。
 
@@ -604,13 +613,17 @@ public:
 
 
 最典型的题目
-
+https://blog.csdn.net/weixin_45799835/article/details/110069469
 - [x] LintCode 391.Number of Airplanes in the Sky (也可以用区间贪心中的区间选点来解决)
 
 - [ ] P1904 天际线
-- [ ] P5490 【模板】扫描线（矩形覆盖问题）
+- [ ] [P5490 【模板】扫描线（矩形覆盖问题）](https://www.luogu.com.cn/problem/solution/P5490)
 - [ ] P1856 [USACO5.5]矩形周长Picture
-
+- [ ] HDU 1542
+- [ ] HDU 1542 Atlandis (扫描线计算面积)
+- [ ] HDU 1255 覆盖的面积 （扫描线计算面积）
+- [ ] POJ 1177 picture （扫描线计算周长）
+- [ ] HDU 3642 get the treasury （扫描线计算体积）
 
 
 

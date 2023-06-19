@@ -4,7 +4,8 @@
 
 * 赵志勇《python机器学习算法》
 * https://blog.csdn.net/ddydavie/article/details/82667890
-* [简单易学的机器学习算法——因子分解机(Factorization Machine)](https://blog.csdn.net/kunlong0909/article/details/52496221?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_baidulandingword-11&spm=1001.2101.3001.4242)
+* [简单易学的机器学习算法——因子分解机(Factorization Machine)](https://blog.csdn.net/kunlong0909/article/details/52496221?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_baidulandingword-11&spm=1001.2101.3001.4242) 
+* [Factorization Machine笔记及Pytorch 实现](http://shomy.top/2018/12/31/factorization-machine/)
 
 ## 因子分解机
 
@@ -73,13 +74,32 @@ $$
 $$
 \begin{aligned}
 \sum_{p = 1}^k \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} \mu_{i,p} \cdot \mu_{j, p} &= \frac{1}{2}\sum_{p = 1}^k  \left(\sum_{i=1}^{n} \sum_{j=1}^{n} \mu_{i,p} \cdot \mu_{j, p} - \sum_{i = 1}^n \mu_{i, p}^2 \right) \\
-&= \frac{1}{2}\sum_{p = 1}^k  \left( \left( \sum_{i = 1}^n \mu_{i, p}\right)^2 -  \sum_{i = 1}^n \mu_{i, p}^2 \right)
+&= \frac{1}{2}\sum_{p = 1}^k  \left( \left( \sum_{i = 1}^n \mu_{i, p}\right)^2 -  \sum_{i = 1}^n \mu_{i, p}^2 \right) \\
+&=w_{0}+X W+\frac{1}{2} \sum_{f=1}^{k}\left\{\left[\left(x_{1}, x_{2}, \ldots x_{n}\right)\left(\begin{array}{c}
+v_{1 f} \\
+v_{2 f} \\
+\vdots \\
+v_{n f}
+\end{array}\right)\right]^{2}-\left(x_{1}^{2}, x_{2}^{2}, \ldots x_{n}^{2}\right)\left(\begin{array}{c}
+v_{1 f}^{2} \\
+v_{2 f}^{2} \\
+\vdots \\
+v_{n f}^{2}
+\end{array}\right)\right\} \\
+&=w_{0}+X W+\frac{1}{2} \operatorname{sum}((X V) \circ(X V)-(X \circ X)(V \circ V), a x i s=1)
 \end{aligned}
 $$
-这样时间复杂度就将为了$O(kn)$。
+这样时间复杂度就将为了$O(kn)$。其中$\circ$表示哈达玛积，即两个同阶矩阵对应元素相乘。
+
+对于上式的化简，可以参考更[**直观的表格解释**](https://zhuanlan.zhihu.com/p/145436595)。
+
+对于$\sum_{i=1}^{n} \sum_{j=1}^{n} \mu_{i,p} \cdot \mu_{j, p}$可以认为是一个$n \times n$的矩阵，而$\sum_{i=1}^{n-1} \sum_{j=i+1}^{n} \mu_{i,p} \cdot \mu_{j, p}$ 可以认为是这个矩阵对角线右上部分的综合，就等于矩阵全部的数字相加后，减去对角线上的数字和，然后除以2得到。
+
+---
 
 对于参数的求解，采用梯度下降算法计算，如果是采用批量梯度下降，则一次迭代会采用全部样本来进行参数学习，如果数据量很大，则计算会很耗时，所以需要采用随机梯度下降算法（stochastic gradient descent），在每次迭代中，只采用一个样本进行调整。
 
+这里$\sigma(y) = \frac{1}{1 + \exp^{-y}}$，其中$y$就是FM模型的结果。
 $$
 \begin{aligned}
 \frac{\partial{\text{loss}^R(\hat{y}, y)}}{\partial{\theta}} &= -\frac{1}{\sigma(\hat{y}\cdot y)}  \sigma(\hat{y}\cdot y) [1 - \sigma(\hat{y}\cdot y)] \cdot y \cdot \frac{\partial{\hat{y}}}{\partial{\theta}} \\
@@ -155,5 +175,41 @@ if __name__ == '__main__':
 
 
 
+PyTorch:
 
+*  https://blog.csdn.net/qq_38237214/article/details/121338159 (考虑了稀疏型和稠密型特征)
+* http://shomy.top/2018/12/31/factorization-machine/
+
+对于稠密型特征：
+
+```python
+import torch
+import torch.nn as nn
+
+
+class FactorizationMachine(nn.Module):
+    def __init__(self, n, k):
+        super(FactorizationMachine, self).__init__()
+        self.n = n
+        self.k = k
+        self.linear = nn.Linear(self.n, 1, bias=True)
+        self.v = nn.Parameter(torch.Tensor(self.k, self.n))  # 注：权重矩阵是(k,n)的，与公式里的相反，目的是下一步能在n的维度上分布初始化
+        nn.init.xavier_uniform_(self.v)
+
+    def forward(self, x):
+        """
+        :param x: Long tensor of size ``(b, n)``
+        :return: Long tensor of size ``(b, 1)``
+        """
+        x1 = self.linear(x)
+        square_of_sum = torch.mm(x, self.v.T) * torch.mm(x, self.v.T)
+        sum_of_square = torch.mm(x * x, self.v.T * self.v.T)
+        x2 = 0.5 * torch.sum((square_of_sum - sum_of_square), dim=-1, keepdim=True)
+        x = x1 + x2
+        return x
+```
+
+`torch.mm`是线性代数里的矩阵相乘，比如一个矩阵是$1 \times 2$，另一个矩阵是$2 \times 3$，则结果的维度是$1 \times 3$。`*`则是矩阵对应位置的元素相乘，要求矩阵的维度相同。
+
+对于稀疏型特征，会采用embedding方法进行转化再计算。
 

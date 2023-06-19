@@ -25,6 +25,8 @@
 - [x] LeetCode  1471 数组中的 k 个最强值  （排序）
 - [x] LeetCode1483 树节点的第 K 个祖先  （倍增优化）
 - [x]  LeetCode  1492 n 的第 k 个因子
+- [x]  LinCode 1139 the kth subarray (第K大子数组和，二分+双指针)
+- [ ]  LeetCode 2386 Find the K-Sum of an Array (第K大子序列和)
 
 
 

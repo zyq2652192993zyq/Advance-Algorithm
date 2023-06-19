@@ -3,15 +3,17 @@
  参考资料：
 
 * [【机器学习】逻辑回归（非常详细](https://zhuanlan.zhihu.com/p/74874291)
-
 * 赵志勇《python机器学习》
 * 《机器学习实战》
 * 周志华《机器学习》
 * https://kivy-cn.github.io/Stanford-CS-229-CN/#/Markdown/cs229-notes1
+* [LR逻辑回归模型的原理、公式推导、Python实现和应用](https://zhuanlan.zhihu.com/p/151036015)
 
 优点：计算代价小，易于理解和实现
 
 缺点：容易欠拟合，分类精度可能不高
+
+## 原理
 
 适用数据类型：数值型和标称型数据
 
@@ -29,7 +31,8 @@ $$
 首先假设：
 
 $$
-\begin{aligned} P(y=1|x;\theta)&=h_{\theta}(x)\ P(y=0|x;\theta)&=1- h_{\theta}(x)\ \end{aligned} 
+\begin{aligned} P(y=1|x;\theta)&=h_{\theta}(x)\ P(y=0|x;\theta) \\
+&=1- h_{\theta}(x)\ \end{aligned}
 $$
 
 更简洁的写法是：
@@ -140,6 +143,37 @@ if __name__ == '__main__':
 ```
 
 求似然函数最大值的方法不止梯度提升一种方法，还可以采用牛顿法，用牛顿法来在逻辑回归中求似然函数$l(\theta)$ 的最大值的时候，得到这一结果的方法也叫做**Fisher评分（Fisher scoring）。**
+
+```python
+class LogisticRegression(nn.Module):
+    def __init__(self):
+        super(LogisticRegression,self).__init__()
+        self.lr=nn.Linear(2,1)   #相当于通过线性变换y=x*T(A)+b可以得到对应的各个系数
+        self.sm=nn.Sigmoid()   #相当于通过激活函数的变换
+
+    def forward(self, x):
+        x=self.lr(x)
+        x=self.sm(x)
+        return x
+```
+
+
+
+## LR正则化
+
+* [CTR预估[三]: Algorithm-LR and Regularization](https://zhuanlan.zhihu.com/p/31504720)
+
+
+
+
+
+## LR的Bias及其应用
+
+
+
+
+
+## LR的扩展MLR
 
 
 

@@ -11,7 +11,7 @@
 * [HRBU ACM 莫队 线段树 树状数组](https://www.bilibili.com/video/BV1PW411v77R/?spm_id_from=333.788.videocard.8)
 
 * [oiClass树状数组](https://www.bilibili.com/video/BV1Yp4y1v7mP/?spm_id_from=333.788.videocard.11)
-
+* https://www.bilibili.com/video/BV12a411i7rP/?spm_id_from=333.788.recommend_more_video.0&vd_source=c601dba09fcd5ed41170f2ff79a9a181
 
 
 ## 基础知识
